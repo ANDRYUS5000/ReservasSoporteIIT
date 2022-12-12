@@ -8,15 +8,15 @@
                 <div class="card-body">
                     <form (submit)="Request()" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label>FINI</label>
+                            <label>Fecha INIcial</label>
                             <input type="time" name="fini" required [(ngModel)]="reserv.fini">
                         </div>
                         <div class="form-group">
-                            <label>FEND</label>
+                            <label>Fecha de terminacion</label>
                             <input type="time" name="fend" required [(ngModel)]="reserv.fend">
                         </div>
                         <div class="form-group">
-                            <label>CHINGA PORQUE??!</label>
+                            <label>NOMBRE DE EVENTO</label>
                             <input type="text" name='event' required [(ngModel)]="reserv.namevent">
                         </div>
                         <div class="form-group">
@@ -29,8 +29,9 @@
                             <option value="Sala de VideoConferencias 1">Sala de VideoConferencias 1</option>
                             <option value="Sala de VideoConferencias 2">Sala de VideoConferencias 2</option>
                             <option value="Auditorio">Auditorio</option>
+
                         </select> <p></p>
-                        <label for="formFile" class="form-label">DOC</label>
+                        <label for="formFile" class="form-label">Anexo opcional (cedula, certificados de eventos, etc)</label>
                         <input type="file" name='file' id="file" class="form-control" [(ngModel)]="file">
                         <p></p>
                         <button class="btn btn-primary" type="submit"> Enviar </button>
