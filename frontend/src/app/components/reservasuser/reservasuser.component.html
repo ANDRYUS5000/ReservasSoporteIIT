@@ -1,0 +1,42 @@
+<div class="continer">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    Solicitar Reserva
+                </div>
+                <div class="card-body">
+                    <form (submit)="Request()" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>FINI</label>
+                            <input type="time" name="fini" required [(ngModel)]="reserv.fini">
+                        </div>
+                        <div class="form-group">
+                            <label>FEND</label>
+                            <input type="time" name="fend" required [(ngModel)]="reserv.fend">
+                        </div>
+                        <div class="form-group">
+                            <label>CHINGA PORQUE??!</label>
+                            <input type="text" name='event' required [(ngModel)]="reserv.namevent">
+                        </div>
+                        <div class="form-group">
+                            <label>DEPENDENCIA</label>
+                            <input type="text" name='depen' required [(ngModel)]="reserv.depend">
+                        </div>
+                        <P></P> SITIO
+                        <select name="sit" id="sit" class="form-control" [(ngModel)]="reserv.sitio" required="se requiere">
+                            <option value="" selected>--- Seleccione ---</option>
+                            <option value="Sala de VideoConferencias 1">Sala de VideoConferencias 1</option>
+                            <option value="Sala de VideoConferencias 2">Sala de VideoConferencias 2</option>
+                            <option value="Auditorio">Auditorio</option>
+                        </select> <p></p>
+                        <label for="formFile" class="form-label">DOC</label>
+                        <input type="file" name='file' id="file" class="form-control" [(ngModel)]="file">
+                        <p></p>
+                        <button class="btn btn-primary" type="submit"> Enviar </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
