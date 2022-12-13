@@ -13,8 +13,8 @@ export const crearReserva=async(req,res)=> {
     })
 }
 export const getReservas=async(req,res)=> {
-    const reservas=await Reserva.find();
-    res.status(200).json(reservas)
+    const reservas=await Reserva.find({});
+    return res.status(200).json(reservas)
 }
 export const getReservaId=(req,res)=> {s
     

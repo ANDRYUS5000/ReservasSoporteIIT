@@ -12,7 +12,7 @@ export class ReservasAdminService {
     private ususer:UserService) { }
 
   getReservas(){
-    return this.http.get<any>(this.URL+'/------');
+    return this.http.get<any>(this.URL+'/report')
   }
 
   async solReserva(res:any){
