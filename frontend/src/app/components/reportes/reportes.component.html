@@ -3,10 +3,62 @@
         <div class="col-md-12 mx-auto">
             <div class="card" *ngFor="let r of reservas"  ngDefaultControl>
                 <div class="card-header">
-                    NOMBRE EVENTO
+                    <label for="">Nombre de evento: {{r.namevent}}</label>
                 </div>
                 <div class="card-body">
+                    <div>
+                        <label for="">USUARIO</label>
+                    </div>
+                    <div>
+                        <label for="">Cedula: {{r.user.ced}}</label>
+                    </div>
+                    <div>
+                        <label for="">Nombre: {{r.user.name}}</label>
+                    </div>
+                    <div>
+                        <label for="">Email: {{r.user.email}}</label>
+                    </div>
+                    <div>
+                        <label for="">Telefono: {{r.user.telefono}}</label>
+                    </div>
+                    <label for="">DEPENDENCIA: {{r.user.dependencia[0].nombre_unidad}}</label>
 
+                    <hr>
+
+                    <div>
+                        <label for="">RESERVA</label>
+                    </div>
+                    <div>
+                        <label for="">Fecha de inicio: {{r.fini}}</label>
+                    </div>
+                    <div>
+                        <label for="">Fecha de conclusion: {{r.fend}}</label>
+                    </div>
+                    <div>
+                        <label for="">Sitio de evento: {{r.sitio}}</label>
+                    </div>
+                    <div>
+                        <label for="">Estado: {{r.state}}</label>
+                    </div>
+
+                    <hr>
+
+                    <div>
+                        <label for="">ACCIONES</label>
+                    </div>
+
+                    <form *ngIf="r.anexo" (click)="Down(r.anexo)">
+                        <button class="btn btn-primary" >Descargar</button>
+                    </form>
+                    <form (click)="resmoda(r._id)">
+                        <button type="reset" class="btn btn-success">Aprobar</button>
+                    </form>
+                    <form (click)="resmods(r._id)">
+                        <button class="btn btn-secondary">Default</button>
+                    </form>
+                    <form (click)="resmodr(r._id)">
+                        <button class="btn btn-danger">Rechazar</button>
+                    </form>
                 </div>
             </div>
         </div>

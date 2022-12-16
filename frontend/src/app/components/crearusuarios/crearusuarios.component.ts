@@ -50,7 +50,6 @@ export class CrearusuariosComponent implements OnInit {
          for (let i of Object.values(res)) {
            this.dependencias.push(i);
          }
-         console.log(this.dependencias);
          
        },
        err => console.log(err)

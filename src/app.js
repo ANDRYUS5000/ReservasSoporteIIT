@@ -6,10 +6,6 @@ import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
 import {createRoles} from './libs/initialSetup'
 
-
-import dependencia from './controllers/dependencia.controller'
-
-
 const app=express()
 createRoles();
 
@@ -53,6 +49,7 @@ app.get('/',(req,res)=>{
         version:app.get('pkg').version
     })
 })
+
 app.use('/api/users',userRoutes)
 app.use('/api/reservas',reservasRoutes)
 app.use('/api/auth',authRoutes)

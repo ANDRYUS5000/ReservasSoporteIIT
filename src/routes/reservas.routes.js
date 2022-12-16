@@ -1,14 +1,31 @@
 import {Router} from 'express'
 import {authJwt} from '../middlewares'
 import * as reservaCtrl from '../controllers/reservas.controller'
+
+const multer=require('multer')
+const storage = multer.diskStorage(
+    {
+        filename:(req,file,cb)=>{
+            const ext =file.originalname.split(".").pop()
+            cb(null, file.filename+'.'+ext)
+        },
+        // destination:(req,file,cb)=>{
+        //     cb(null,'./public')
+        // }
+    }
+)
+
+const upload=multer({storage})
+
 const router= Router()
 
+router.post('/solicitar',reservaCtrl.crearReserva) //cambie el verify aqui
+router.post('/upload',upload.single('file'),reservaCtrl.upload)
+
 router.get('/report',reservaCtrl.getReservas)
-//esta ruta si necesita token y cualquiera puede crear una reserva,
-router.post('/solicitar',reservaCtrl.crearReserva)//cambie el verify aqui
-//aprobar reserva solo lo hace el admin
-router.post('/aprobar',[authJwt.verifyToken,authJwt.isAdmin],reservaCtrl.aprobarReserva)
-router.get('/:reservaId',reservaCtrl.getReservaId)
-//router.put('/:reservaId',verifyToken,reservaCtrl)
+router.get('/files/:id', reservaCtrl.download)
+router.get('/resmoda/:id', reservaCtrl.upda)
+router.get('/resmods/:id', reservaCtrl.upds)
+router.get('/resmodr/:id', reservaCtrl.updr)
 
 export default router;

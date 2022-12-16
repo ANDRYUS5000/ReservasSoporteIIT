@@ -1,5 +1,6 @@
-import {Schema,model} from 'mongoose'
-const reservaSchema=new Schema({
+const {Schema,model} = require( 'mongoose')
+
+const reservaSchema=Schema({
     fini:{
         type: String,
         require:[true,"se necesita fecha de inicio"],
@@ -14,11 +15,7 @@ const reservaSchema=new Schema({
     },
     user:{
         ref:"User",
-        type:Schema.Types.ObjectId
-    },
-    depend:{
-        type: String,
-        require:[true,"nombre su dependencia, seccion o programa"]
+        type:Schema.Types.Map
     },
     sitio:{
         type:String,
@@ -39,4 +36,4 @@ const reservaSchema=new Schema({
     versionKey:false
 })
 
-export default model('Reserva',reservaSchema)
+module.exports=model('Reserva', reservaSchema)

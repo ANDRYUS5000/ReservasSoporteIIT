@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { AuthService } from 'src/app/services/auth.service';
 import { IntermediumService } from 'src/app/services/intermedium.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -19,7 +20,8 @@ export class SigninComponent implements OnInit {
   constructor(
     // private authService:AuthService,
     private intmService:IntermediumService,
-    private router:Router) { }
+    private router:Router,
+    private authservice:AuthService) { }
 
   ngOnInit(): void {
   }
@@ -31,10 +33,18 @@ export class SigninComponent implements OnInit {
     {
       this.mensaje=this.intmService.getMensaje();  
       this.bandera=true;
+      try {
+        setTimeout(()=>{
+          this.authservice.logOut()
+        }
+          
+          , 108000);
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
      
     
   }
-
-
 }
