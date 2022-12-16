@@ -13,14 +13,14 @@
             </li>
           </ng-container>
           
-        <ng-container *ngIf="intmService.esAdmin()">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reportes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/admin" routerLinkActive="active">Gestionar Reservas</a>
-            </li>      
-        </ng-container>
+          <ng-container *ngIf="intmService.esAdmin()">
+              <li class="nav-item">
+                  <a class="nav-link" routerLink="/admin" routerLinkActive="active">Gestionar Reservas</a>
+              </li>      
+            </ng-container>
+          <ng-container class="nav-item" *ngIf="intmService.esAdmin() || intmService.esSuperAdmin()" >
+            <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reporte de Reservas</a>
+          </ng-container>
           <ng-container *ngIf="intmService.esSuperAdmin()">
             <li class="nav-item">
               <a class="nav-link" routerLink="/registeruser" routerLinkActive="active">Crear Usuarios</a>
@@ -28,22 +28,18 @@
             <li class="nav-item">
               <a class="nav-link" routerLink="/createspace" routerLinkActive="active">Crear Espacios</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reporte de Reservas</a>
-            </li>
           </ng-container>
         </ng-container>
-        
         
       </ul>
       <ul class="navbar-nav ml-auto">
        <ng-container *ngIf="!authService.loggedIn(); else loggedIn ">
         <li class="nav-item">
           <a class="nav-link" routerLink="/signin" routerLinkActive="active">Ingreso</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registro</a>
-      </li>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registro</a>
+        </li>
        </ng-container>
        <ng-template #loggedIn>
         <li class="nav-item">

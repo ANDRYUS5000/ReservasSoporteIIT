@@ -30,9 +30,9 @@ export class ReportesComponent implements OnInit {
                   telefono:''}, 
             sitio:'', 
             state:'', 
-            anexo:''}]
+            anexo:'',
+            createdAt:new Date}]
   
-
   constructor(private reseserver:ReservasAdminService) { }
 
   ngOnInit(): void {
@@ -40,6 +40,9 @@ export class ReportesComponent implements OnInit {
     .subscribe(
       res=>{
         this.reservas=res;
+        this.reservas.sort((a,b)=>{
+          return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+        })
         console.log(this.reservas);
       }
     )
@@ -50,6 +53,10 @@ export class ReportesComponent implements OnInit {
     .subscribe(
       res=>{
       this.reservas=res
+      this.reservas.sort((a,b)=>{
+        return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+      })
+      console.log(this.reservas);
     })
   }
   resmods(id:string){
@@ -57,6 +64,10 @@ export class ReportesComponent implements OnInit {
     .subscribe(
       res=>{
       this.reservas=res
+      this.reservas.sort((a,b)=>{
+        return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+      })
+      console.log(this.reservas);
     })
   }
   resmodr(id:string){
@@ -64,12 +75,14 @@ export class ReportesComponent implements OnInit {
     .subscribe(
       res=>{
       this.reservas=res
+      this.reservas.sort((a,b)=>{
+        return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+      })
+      console.log(this.reservas);
     })
   }
 
   async Down(id:string){
-    await (await this.reseserver.Download(id)).subscribe(res=>{
-      
-    })
+    await (await this.reseserver.Download(id)).subscribe()
   }
 }

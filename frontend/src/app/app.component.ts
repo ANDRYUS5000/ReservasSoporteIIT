@@ -12,7 +12,4 @@ export class AppComponent {
   esAdmin=false;
   constructor(public authService:AuthService,public intmService:IntermediumService){
   }
-  
-  
-
 }

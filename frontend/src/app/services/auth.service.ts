@@ -44,7 +44,6 @@ export class AuthService {
   logOut(){
     localStorage.clear()
     this.router.navigate(['/home']);
-  
   }
   getDependencias(){
     return this.http.get(this.URL +'/auth/dependencias');
