@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TitleStrategy } from '@angular/router';
+import * as e from 'cors';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
 
@@ -32,8 +33,23 @@ export class ReportesComponent implements OnInit {
             state:'', 
             anexo:'',
             createdAt:new Date}]
+  reservaux=[{_id:'',
+            fini:'', 
+            fend:'', 
+            namevent:'', 
+            user:{name:'',
+                  ced:'',
+                  roles:[],
+                  dependencia:[this.dependencia],
+                  email:'',
+                  telefono:''}, 
+            sitio:'', 
+            state:'', 
+            anexo:'',
+            createdAt:new Date}]
   
-  constructor(private reseserver:ReservasAdminService) { }
+  constructor(private reseserver:ReservasAdminService,
+              private authService:AuthService) { }
 
   ngOnInit(): void {
     this.reseserver.getReservas()
@@ -43,9 +59,21 @@ export class ReportesComponent implements OnInit {
         this.reservas.sort((a,b)=>{
           return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
         })
+        this.reservaux=this.reservas
         console.log(this.reservas);
       }
     )
+    this.authService.getDependencias().subscribe(
+      res => {
+        
+        for (let i of Object.values(res)) {
+          this.dependencias.push(i);
+        }
+        console.log(this.dependencias);
+        
+      },
+      err => console.log(err)
+    );
   }
 
   resmoda(id:string){
@@ -56,6 +84,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
       })
+      this.reservaux=this.reservas
       console.log(this.reservas);
     })
   }
@@ -67,6 +96,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
       })
+      this.reservaux=this.reservas
       console.log(this.reservas);
     })
   }
@@ -78,11 +108,20 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
       })
+      this.reservaux=this.reservas
       console.log(this.reservas);
     })
   }
 
   async Down(id:string){
     await (await this.reseserver.Download(id)).subscribe()
+  }
+
+  onFacultad($e:any){
+    if ($e.target.value!='') {
+      this.reservaux=this.reservas.filter(r=>r.user.dependencia[0].nombre_unidad==$e.target.value)
+    }else{
+      this.reservaux=this.reservas
+    }
   }
 }

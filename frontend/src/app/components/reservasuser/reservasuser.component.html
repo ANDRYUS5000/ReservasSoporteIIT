@@ -1,39 +1,126 @@
-<div class="continer">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    Solicitar Reserva
-                </div>
-                <div class="card-body">
-                    <form (submit)="Request()" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>Fecha INIcial</label>
-                            <input type="time" name="fini" required [(ngModel)]="reserv.fini">
-                        </div>
-                        <div class="form-group">
-                            <label>Fecha de terminacion</label>
-                            <input type="time" name="fend" required [(ngModel)]="reserv.fend">
-                        </div>
-                        <div class="form-group">
-                            <label>NOMBRE DE EVENTO</label>
-                            <input type="text" name='event' required [(ngModel)]="reserv.namevent">
-                        </div>
-                        <P></P> SITIO
-                        <select name="sit" id="sit" class="form-control" [(ngModel)]="reserv.sitio" required="se requiere">
-                            <option value="" selected>--- Seleccione ---</option>
-                            <option value="Sala de VideoConferencias 1">Sala de VideoConferencias 1</option>
-                            <option value="Sala de VideoConferencias 2">Sala de VideoConferencias 2</option>
-                            <option value="Auditorio">Auditorio</option>
+<h1>SOLICITAR ESPACIO FÍSICO</h1>
 
-                        </select> <p></p>
-                        <label for="formFile" class="form-label">Anexo opcional (cedula, certificados de eventos, etc)</label>
-                        <input type="file" name='file' id="file" class="form-control" (change)="selectFile($event)">
-                        <p></p>
-                        <button class="btn btn-primary" type="submit"> Enviar </button>
-                    </form>
-                </div>
+<div> fecha seleccionada: <h4 class="d-inline">{{today}}</h4> </div>
+
+<div class="all">
+  <div class="container">
+    <full-calendar class="" [options]="calendarOptions"></full-calendar>
+  </div>
+    <form (submit)="Request()" enctype="multipart/form-data">
+        <div class="card text-left">
+            <div class="card-header text-center">
+                Reserva
             </div>
+
+            <div class="card-body">
+                <div>
+                    <label for="nombre">Nombre del Evento</label>
+                    <input class="ml-2 mb-3" type="text" name="nombre" id="nombre" [(ngModel)]="reserv.namevent">
+                </div>
+
+                <label for="" class="mt-4">Espacio Fisico</label>
+                <select class="ml-2 mb-4" [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+                    <option value="0" selected disabled>Selecciona un Espacio</option>
+                    <option *ngFor="let espacio of espacios">
+                    {{espacio.name}}
+                    </option>
+                </select>
+
+                <div *ngIf="opcionSeleccionado=='Auditorio'">
+                    
+                    <div class="d-inline" >
+
+                        <label for="from">Hora Inicial: </label>
+                        <select name="from" id="from" (change)="onHora($event)">
+                            <option value="not" selected disabled>Selec Hora</option>
+                            <option value="7:00">7:00AM</option>
+                            <option value="8:00">8:00AM</option>
+                            <option value="9:00">9:00AM</option>
+                            <option value="10:00">10:00AM</option>
+                            <option value="11:00">11:00AM</option>
+                            <option value="12:00">12:00PM</option>
+                            <option value="13:00">1:00PM</option>
+                            <option value="14:00">2:00PM</option>
+                            <option value="15:00">3:00PM</option>
+                            <option value="16:00">4:00PM</option>
+                            <option value="17:00">5:00PM</option>
+                            <option value="18:00">6:00PM</option>
+                        </select>
+                    </div>
+                    <div class="d-inline ml-3">
+
+                        <label for="to">Hora Final: </label>
+                        <select name="to" id="to" (change)="onHora1($event)">
+                            <option value="not" selected disabled>Selec Hora</option>
+                            <option value="9:00">9:00AM</option>
+                            <option value="10:00">10:00AM</option>
+                            <option value="11:00">11:00AM</option>
+                            <option value="12:00">12:00PM</option>
+                            <option value="13:00">1:00PM</option>
+                            <option value="14:00">2:00PM</option>
+                            <option value="15:00">3:00PM</option>
+                            <option value="16:00">4:00PM</option>
+                            <option value="17:00">5:00PM</option>
+                            <option value="18:00">6:00PM</option>
+                            <option value="19:00">7:00PM</option>
+                            <option value="20:00">8:00PM</option>
+                        </select>
+                    </div>
+
+                    <div *ngSwitchCase="'Sala de VideoConferencias 1'">
+                        <div class="d-inline" >
+
+                            <label for="from">Hora Inicial: </label>
+                            <select name="from" id="from" (change)="onHora($event)">
+                                <option value="not" selected disabled>Selec Hora</option>
+                                <option value="7:00">7:00AM</option>
+                                <option value="8:00">8:00AM</option>
+                                <option value="9:00">9:00AM</option>
+                                <option value="10:00">10:00AM</option>
+                                <option value="11:00">11:00AM</option>
+                                <option value="12:00">12:00PM</option>
+                                <option value="13:00">1:00PM</option>
+                                <option value="14:00">2:00PM</option>
+                                <option value="15:00">3:00PM</option>
+                                <option value="16:00">4:00PM</option>
+                                <option value="17:00">5:00PM</option>
+                                <option value="18:00">6:00PM</option>
+                            </select>
+                        </div>
+
+                        <div class="d-inline ml-3">
+
+                            <label for="to">Hora Final: </label>
+                            <select name="to" id="to" (change)="onHora1($event)">
+                                <option value="not" selected disabled>Selec Hora</option>
+                                <option value="8:00">8:00AM</option>
+                                <option value="9:00">9:00AM</option>
+                                <option value="10:00">10:00AM</option>
+                                <option value="11:00">11:00AM</option>
+                                <option value="12:00">12:00PM</option>
+                                <option value="13:00">1:00PM</option>
+                                <option value="14:00">2:00PM</option>
+                                <option value="15:00">3:00PM</option>
+                                <option value="16:00">4:00PM</option>
+                                <option value="17:00">5:00PM</option>
+                                <option value="18:00">6:00PM</option>
+                                <option value="19:00">7:00PM</option>
+                            </select>   
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="file" class="mt-4">Anexos</label>
+                    <input type="file" name="file" id="file" class="ml-2" (change)="selectFile($event)">
+                </div>
+
+            </div>
+
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-primary">Reservar</button>
+            </div>
+
         </div>
-    </div>
+    </form>
 </div>

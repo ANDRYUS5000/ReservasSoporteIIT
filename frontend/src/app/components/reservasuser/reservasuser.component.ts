@@ -1,16 +1,77 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CalendarOptions } from '@fullcalendar/angular';
+import { compareAsc, compareDesc, format, parse, parseISO, startOfToday } from "date-fns";
 import { AuthService } from 'src/app/services/auth.service';
 import { IntermediumService } from 'src/app/services/intermedium.service';
 import { UserService } from 'src/app/services/user.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-reservasuser',
   templateUrl: './reservasuser.component.html',
   styleUrls: ['./reservasuser.component.css']
 })
-export class ReservasuserComponent implements OnInit {
+export class ReservasuserComponent implements OnInit{
+
+// ------------------------------------------------- Date fns ---------------------------------------------------- //
+
+// llegaInicio = document.getElementById("from").value;
+
+
+today = format(startOfToday(), 'yyyy-MM-dd');
+start: any;
+end: any;
+convert: any;
+convert2: any;
+
+onHora(e: any){
+  this.start = this.today+" "+e.target.value
+}
+
+onHora1(e: any){
+  this.end = this.today+" "+e.target.value
+}
+
+
+// -------------------------------------------------------------------------------------------------------- //
+
+
+// -------------------------------------------------- Calendar Options ---------------------------------------------- //
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth', // bind is important!
+    dateClick: this.handleDateClick.bind(this),
+    
+    hiddenDays: [0]
+
+  };
+
+  handleDateClick(arg: any) {
+    this.convert = parseISO(arg.dateStr)
+    this.convert2 = startOfToday()
+    if(compareAsc(this.convert, this.convert2) === 1 || compareAsc(this.convert, this.convert2) === 0 ){
+      this.today = arg.dateStr
+    }else{ alert("Fecha Incorrecta, No se puede agendar para fechas pasadas")}
+    
+  };
+
+  espacios: any = [
+    {name: "Auditorio", value: 1},{name: "Sala de VideoConferencias 1", value: 2}, {name: "Sala de VideoConferencias 2", value: 3}
+  ];
+ 
+
+  opcionSeleccionado: any  = '0';
+  verSeleccion: any        = '';
+
+  capturar() {
+    // Pasamos el valor seleccionado a la variable verSeleccion
+    this.verSeleccion = this.opcionSeleccionado;
+  };
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+//------------------------------------------Envio de Reserva---------------------------------------------------- //
 
   reserv={
     fini:'',
@@ -29,12 +90,12 @@ export class ReservasuserComponent implements OnInit {
     public intmserver:IntermediumService,
     public ususer:UserService,
     public reserserv:ReservasAdminService
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.FileSelected=false
   }
-  
+
   selectFile($e: any): void {
     this.FileSelected=true
     if (this.FileSelected) {
@@ -49,6 +110,9 @@ export class ReservasuserComponent implements OnInit {
 
   async Request(){
     if(this.intmserver.esUser()){
+      this.reserv.sitio=this.opcionSeleccionado
+      this.reserv.fini=this.start
+      this.reserv.fend=this.end
       this.reserv.user=this.ususer.getuser()
       this.reserv.state='solicitado'
       await (await this.reserserv.solReserva(this.reserv)).subscribe(async(res)=>{

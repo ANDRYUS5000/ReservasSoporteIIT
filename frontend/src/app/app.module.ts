@@ -18,6 +18,19 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { GestionarespaciosComponent } from './components/gestionarespacios/gestionarespacios.component';
 import { CrearusuariosComponent } from './components/crearusuarios/crearusuarios.component';
 
+// ---------------------------------
+
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import  dayGridPlugin  from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction';
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  timeGridPlugin,
+  dayGridPlugin,
+  interactionPlugin
+]);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +47,8 @@ import { CrearusuariosComponent } from './components/crearusuarios/crearusuarios
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FullCalendarModule
   ],
   providers: [
     AuthGuard,

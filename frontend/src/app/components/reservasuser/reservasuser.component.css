@@ -1,0 +1,14 @@
+
+.all{
+    margin-top: 20px;
+    display: flex;
+}
+
+.container{
+    margin-left: -15px;
+    width: 515px;
+}
+
+.row{
+    display: inline-table;
+}
