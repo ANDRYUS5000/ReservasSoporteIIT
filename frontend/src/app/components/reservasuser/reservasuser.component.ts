@@ -119,8 +119,6 @@ name = document.getElementById("nombre")
           body.append('file',this.filetmp.fileraw, this.filetmp.filename);
           body.append('res',res._id);
           (await this.reserserv.saveFile(body)).subscribe()
-        }else{
-          console.log("no file selected");
         }
       })
       alert("Reserva solicitada con éxito,será notificado por el personal de la oficina de Soporte IIT")
