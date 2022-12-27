@@ -15,7 +15,6 @@ export class ReservasadminComponent implements OnInit {
     this.reservasAdminService.getReservas()
     .subscribe(
       res=>{
-        console.log(res)
         this.reservas=res;
       }
     )

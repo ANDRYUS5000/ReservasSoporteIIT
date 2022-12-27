@@ -7,27 +7,27 @@ export const crearReserva=async(req,res)=> {
     const {fini, fend, namevent, user, sitio, state} = req.body
     const r=new Reserva({fini, fend, namevent, user,sitio, state})
     await r.save()
-    .then((wea)=>{
-        return res.status(200).json(wea)
+    .then((reserva)=>{
+        return res.status(200).json(reserva)
     })
     .catch(err=>{
         console.log(err);
         res.json(':/')
     })
 }
-export const getReservas=async(req,res)=> {//PARA HACER TODO ESTO ESTA JODIDO :/ MEJOR SOLO GUARDAR EN MAPEO LOS MENDIGOS ROLES Y DEMAS JODER >:/
-    const reservas=await Reserva.find({})
-    for (const r of reservas) { // este for trabaja sicronicamente con el codigo
-        const s=await User.findOne(r.user.toJSON()).populate(['roles','dependencia'])
-        r.user.set('dependencia',s.get('dependencia'))
+export const getReservas=async(req,res)=> {
+    const reservas = await Reserva.find({});
+    for (let r of reservas) { // este for trabaja sicronicamente con el codigo
+        const s=await User.findOne(r.user).populate(['roles','dependencia'])
+        r.user = s
     }
     return res.status(200).json(reservas)
 }
 export const upload=async(req,res)=>{
     var paths=req.file.originalname.split(".")
     const bucket=new mongoose.mongo.GridFSBucket(mongoose.connection.db, {bucketName:'uploads'})
-    var wea=fs.createReadStream(req.file.path).pipe(bucket.openUploadStream(req.file.originalname, {contentType:paths[paths.length-1]}))
-    var fileid=wea.id.toString()
+    var file=fs.createReadStream(req.file.path).pipe(bucket.openUploadStream(req.file.originalname, {contentType:paths[paths.length-1]}))
+    var fileid=file.id.toString()
     const r=await Reserva.findByIdAndUpdate(req.body.res,{anexo:fileid})
     res.send({data:"OK"})
 }
@@ -56,6 +56,6 @@ export const upds=async(req,res)=> {
     getReservas(req,res)
 }
 export const updr=async(req,res)=> {
-    const r= await Reserva.findByIdAndUpdate(req.params.id, {state:'reprobado'}, {new:true})
+    const r= await Reserva.findByIdAndUpdate(req.params.id, {state:'rechazado'}, {new:true})
     getReservas(req,res)
 }

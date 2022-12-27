@@ -1,3 +1,4 @@
-.calendar{
-    margin-top: 20px;
+.cal {
+    margin: 20px;
+    min-width:500px;
 }

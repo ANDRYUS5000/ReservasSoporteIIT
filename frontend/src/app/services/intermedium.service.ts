@@ -24,7 +24,7 @@ export class IntermediumService {
       res=>{
         localStorage.setItem('token',res.token);
         localStorage.setItem('roles',res.roles);
-        this.ususer.setuser(res.id)
+        localStorage.setItem('id', res.id);
         this.tipo_user=res.roles;
         this.dependencia=res.dependencia;
         if(localStorage.getItem('roles')==='USER')
@@ -77,4 +77,6 @@ export class IntermediumService {
       return ""
     }
   }
+
+
 }

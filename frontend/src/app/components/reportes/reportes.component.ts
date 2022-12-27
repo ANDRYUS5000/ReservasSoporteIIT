@@ -57,10 +57,9 @@ export class ReportesComponent implements OnInit {
       res=>{
         this.reservas=res;
         this.reservas.sort((a,b)=>{
-          return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+          return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
         })
         this.reservaux=this.reservas
-        console.log(this.reservas);
       }
     )
     this.authService.getDependencias().subscribe(
@@ -69,7 +68,6 @@ export class ReportesComponent implements OnInit {
         for (let i of Object.values(res)) {
           this.dependencias.push(i);
         }
-        console.log(this.dependencias);
         
       },
       err => console.log(err)
@@ -82,10 +80,9 @@ export class ReportesComponent implements OnInit {
       res=>{
       this.reservas=res
       this.reservas.sort((a,b)=>{
-        return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+        return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
       this.reservaux=this.reservas
-      console.log(this.reservas);
     })
   }
   resmods(id:string){
@@ -94,10 +91,9 @@ export class ReportesComponent implements OnInit {
       res=>{
       this.reservas=res
       this.reservas.sort((a,b)=>{
-        return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+        return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
       this.reservaux=this.reservas
-      console.log(this.reservas);
     })
   }
   resmodr(id:string){
@@ -106,10 +102,9 @@ export class ReportesComponent implements OnInit {
       res=>{
       this.reservas=res
       this.reservas.sort((a,b)=>{
-        return Date.parse(a.createdAt.valueOf().toString()) - Date.parse(b.createdAt.valueOf().toString())
+        return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
       this.reservaux=this.reservas
-      console.log(this.reservas);
     })
   }
 

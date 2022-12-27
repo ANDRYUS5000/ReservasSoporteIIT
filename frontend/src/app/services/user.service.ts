@@ -5,19 +5,8 @@ import { inject, Injectable } from '@angular/core';
 })
 export class UserService {
 
-  private user={_id:'',
-                name:'',
-                ced:'',
-                roles:'',
-                dependencia:'',
-                email:'',
-                password:'',
-                telefono:''}
+  private user=localStorage.getItem('id')
   constructor() { }
-
-  setuser (usu:any){
-    this.user=usu
-  }
 
   getuser(){
     return this.user

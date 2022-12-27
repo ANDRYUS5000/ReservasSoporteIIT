@@ -34,13 +34,16 @@ export class SignupComponent implements OnInit {
     this.getDependencias();
   }
 
-  onFacultad(e: any) {
-    //console.log(e.target.value);
-    this.user.dependencia = e.target.value;
+//   onFacultad(e: any) {
+//     this.user.dependencia = e.target.value;
+// }
+
+onFacultad($e:any){
+  
+  this.user.dependencia=$e.target.value
 }
 
   getDependencias() {
-    
     
     this.authService.getDependencias().subscribe(
       res => {
@@ -48,7 +51,6 @@ export class SignupComponent implements OnInit {
         for (let i of Object.values(res)) {
           this.dependencias.push(i);
         }
-        console.log(this.dependencias);
         
       },
       err => console.log(err)
@@ -60,8 +62,7 @@ export class SignupComponent implements OnInit {
     {
       this.authService.signUp(this.user)    
       .subscribe(
-        res=>{        
-          // console.log(res.token)
+        res=>{
           //localStorage.setItem('token',res.token)
           //localStorage.setItem('roles',res.roles)
           //localStorage.setItem('dependencia',res.dependencia)

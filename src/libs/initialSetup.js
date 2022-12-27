@@ -10,8 +10,6 @@ export const createRoles=async()=>{
     new Role({name:"USER"}).save(),
     new Role({name:"ADMIN"}).save(),
     new Role({name:"SUPERA"}).save()])
-    
-    console.log(values)
    }
    catch(error){
     console.error(error)
@@ -27,8 +25,6 @@ export const createEspacios=async()=>{
     new tipoEspFis({name:"AUDITORIO"}).save(),
     new tipoEspFis({name:"SALA"}).save(),
     new tipoEspFis({name:"AULA"}).save()])
-    
-    console.log(values)
    }
    catch(error){
     console.error(error)

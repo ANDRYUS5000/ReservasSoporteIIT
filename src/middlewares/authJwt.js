@@ -7,7 +7,6 @@ import Role from '../models/role'
 export const verifyToken=async(req,res,next)=>{
     try{
     const token=req.headers["x-access-tokenA"]
-    //console.log(token)
     if(!token) return res.status(403).json({message:"No hay token"})
     const decoded=jwt.verify(token,config.SECRET)
     //me retorna en el token el valor del usuario
@@ -27,8 +26,6 @@ export const verifyToken=async(req,res,next)=>{
 export const isUser=async(req,res)=>{
     const user=await User.findById(req.userId)
     const roles=await Role.find({_id: {$in:user.roles}})
-
-    console.log(roles)
     for(let rol of roles)
     {
         if(rol.name==="USER"){

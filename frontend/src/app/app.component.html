@@ -1,54 +1,54 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-haspopup="true">
-    <a class="navbar-brand" routerLink="/home" routerLinkActive="active">Inicio</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ">
-        <ng-container *ngIf="authService.loggedIn()">
-          <ng-container  *ngIf="intmService.esUser()">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/reservas" routerLinkActive="active">Solicitar Reserva</a>
-            </li>
-          </ng-container>
-          
-          <ng-container *ngIf="intmService.esAdmin()">
-              <li class="nav-item">
-                  <a class="nav-link" routerLink="/admin" routerLinkActive="active">Gestionar Reservas</a>
-              </li>      
-            </ng-container>
-          <ng-container class="nav-item" *ngIf="intmService.esAdmin() || intmService.esSuperAdmin()" >
-            <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reporte de Reservas</a>
-          </ng-container>
-          <ng-container *ngIf="intmService.esSuperAdmin()">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/registeruser" routerLinkActive="active">Crear Usuarios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/createspace" routerLinkActive="active">Crear Espacios</a>
-            </li>
-          </ng-container>
+<nav class="navbar  navbar-dark bg-primary" aria-haspopup="true">
+  <a class="navbar-brand" routerLink="/home" routerLinkActive="active">Inicio</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ">
+      <ng-container *ngIf="authService.loggedIn()">
+        <ng-container  *ngIf="intmService.esUser()">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reservas" routerLinkActive="active">Solicitar Reserva</a>
+          </li>
         </ng-container>
         
-      </ul>
-      <ul class="navbar-nav ml-auto">
-       <ng-container *ngIf="!authService.loggedIn(); else loggedIn ">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/signin" routerLinkActive="active">Ingreso</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registro</a>
-        </li>
-       </ng-container>
-       <ng-template #loggedIn>
-        <li class="nav-item">
-          <a class="nav-link" style="cursor:pointer" (click)="authService.logOut()">Cerrar sesión</a>
-        </li>
-       </ng-template>
-      </ul>
-    </div>
-  </nav>
-<div class="container p-5">
-    <router-outlet></router-outlet>
+        <ng-container *ngIf="intmService.esAdmin()">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin" routerLinkActive="active">Gestionar Reservas</a>
+            </li>      
+          </ng-container>
+        <ng-container class="nav-item" *ngIf="intmService.esAdmin() || intmService.esSuperAdmin()" >
+          <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reporte de Reservas</a>
+        </ng-container>
+        <ng-container *ngIf="intmService.esSuperAdmin()">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/registeruser" routerLinkActive="active">Crear Usuarios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/createspace" routerLinkActive="active">Crear Espacios</a>
+          </li>
+        </ng-container>
+      </ng-container>
+      
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <ng-container *ngIf="!authService.loggedIn(); else loggedIn ">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/signin" routerLinkActive="active">Ingreso</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registro</a>
+      </li>
+      </ng-container>
+      <ng-template #loggedIn>
+      <li class="nav-item">
+        <a class="nav-link" style="cursor:pointer" (click)="authService.logOut()">Cerrar sesión</a>
+      </li>
+      </ng-template>
+    </ul>
+  </div>
+</nav>
+<div class="p-5">
+  <router-outlet></router-outlet>
 </div>

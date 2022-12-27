@@ -33,7 +33,6 @@ export const signUp=async(req,res)=>{
     }
     
     const savedUser=await newUser.save();
-    console.log(savedUser)
     //creación del token
     const token=jwt.sign({id:savedUser._id},config.SECRET,{
         expiresIn:1800//30 minutos
@@ -46,7 +45,7 @@ export const signUp=async(req,res)=>{
 export const signIn=async(req,res)=>{
     //con esto traigo a roles y dependencias el nombre de los objetos usando sus objectId
     const userFound=await User.findOne({email:req.body.email}).populate(['roles','dependencia'])
-    const us=await User.findOne({email:req.body.email})
+
     if(!userFound){
         return res.status(400).json({message:"El usuario no existe"})
     }
@@ -58,9 +57,8 @@ export const signIn=async(req,res)=>{
     }
     //retornar token si el usuario existe y su password coincide
     const token=jwt.sign({id:userFound._id},config.SECRET,{expiresIn:1800})
-    console.log(userFound)
     res.json({roles:userFound.roles[0].toJSON().name,
-                id:us,
+                id:userFound._id,
                 token})
 }
 
@@ -74,15 +72,11 @@ export const crearEspacio = async (req, res) => {
    
     if (tipoesp){
         const foundTipo=await TipoFis.find({name:{$in: tipoesp}});
-        console.log("TIPO ENCONTRADO",foundTipo)
-        console.log("====", foundTipo[0].toJSON()._id)
         let tipo = foundTipo[0].toJSON()._id
         newEspFis.tipo_espacio = tipo;
-        console.log("----------------------------",newEspFis)
     }
     const savedEsp=await newEspFis.save();
     
-    console.log(savedEsp)
     res.status(200).json({savedEsp})
 }
 

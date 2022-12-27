@@ -32,7 +32,6 @@ export const checkRolesExisted = (req, res, next) => {
 export const checkTipoEspExisted = (req, res, next) => {
    getTipoEspFis().then(function(resp){
     let tipo=resp.filter((item)=>item.toJSON().tipo_unidad==req.body.tipo);
-    console.log(tipo)
     if(tipo){
         next();
     }
@@ -51,36 +50,34 @@ export const checkTipoEspExisted = (req, res, next) => {
 export const checkDependenciaExist = (req, res, next) => {
     getDependencias().then(function (resp) {
         let dep = resp.filter((item) => item.toJSON().id_unidad == req.body.dependencia);
-        console.log(dep)
         if (dep) {
             next();
         } else {
             return res.status(400).json({
-                message: "La dependencia no existe"
+                message: "La dependencia no existe" + dep
             })
         }
         
     }).catch(function (err) {
         return res.status(400).json({
-            message: "La dependencia no existe"
+            message: "La dependencia no existe #2"
         })
     });
 }
 export const checkDependencia = (req, res, next) => {
     getDependencias().then(function (resp) {
         let dep = resp.filter((item) => item.toJSON().id_unidad == req.body.dependencia);
-        if (dep) {
-            console.log(dep[0]._id)
+        if (dep.length!=0) {
             next();
         } else {
             return res.status(400).json({
-                message: "La dependencia no existe"
+                message: "La dependencia no existe #3" + dep
             })
         }
         
     }).catch(function (err) {
         return res.status(400).json({
-            message: "La dependencia no existe"
+            message: "La dependencia no existe #4"
         })
     });
 };

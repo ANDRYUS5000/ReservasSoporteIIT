@@ -34,6 +34,7 @@ onHora1(e: any){
   this.end = this.today+" "+e.target.value
 }
 
+name = document.getElementById("nombre")
 
 // -------------------------------------------------------------------------------------------------------- //
 
@@ -98,9 +99,6 @@ onHora1(e: any){
 
   selectFile($e: any): void {
     this.FileSelected=true
-    if (this.FileSelected) {
-      console.log("seleccionado");
-    }
     const [file] = $e.target.files
     this.filetmp={
       fileraw:file,
@@ -110,22 +108,22 @@ onHora1(e: any){
 
   async Request(){
     if(this.intmserver.esUser()){
-      this.reserv.sitio=this.opcionSeleccionado
+      this.reserv.sitio= this.opcionSeleccionado
       this.reserv.fini=this.start
       this.reserv.fend=this.end
-      this.reserv.user=this.ususer.getuser()
+      this.reserv.user=localStorage.getItem('id')
       this.reserv.state='solicitado'
       await (await this.reserserv.solReserva(this.reserv)).subscribe(async(res)=>{
-        console.log(res);
         if (this.FileSelected) {
           const body=new FormData()
           body.append('file',this.filetmp.fileraw, this.filetmp.filename);
           body.append('res',res._id);
-          (await this.reserserv.saveFile(body)).subscribe(res=>console.log(res))
+          (await this.reserserv.saveFile(body)).subscribe()
         }else{
-          console.log("sin file");
+          console.log("no file selected");
         }
       })
+      alert("Reserva solicitada con éxito,será notificado por el personal de la oficina de Soporte IIT")
     }
   }
 }

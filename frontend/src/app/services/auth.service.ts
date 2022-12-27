@@ -34,13 +34,6 @@ export class AuthService {
   createEspace(espacio:any){
     return this.http.post<any>(this.URL+'/auth/crearespacio',espacio);
   }
-
-  async getuser(id:any){
-    await this.http.get<any>(this.URL+'/auth/getUser/'+id).subscribe(async(wea)=>{
-      this.ususer.setuser(wea)
-    });
-  }
- 
   logOut(){
     localStorage.clear()
     this.router.navigate(['/home']);

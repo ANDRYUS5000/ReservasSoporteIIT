@@ -6,121 +6,126 @@
   <div class="container">
     <full-calendar class="" [options]="calendarOptions"></full-calendar>
   </div>
-    <form (submit)="Request()" enctype="multipart/form-data">
-        <div class="card text-left">
-            <div class="card-header text-center">
-                Reserva
+
+
+ <form (submit)="Request()" enctype="multipart/form-data">
+    <div class="card text-left">
+        <div class="card-header text-center">
+            Reserva
+        </div>
+
+        <div class="card-body">
+            <div>
+                <label for="nombre">Nombre del Evento</label>
+                <input class="ml-2 mb-3" type="text" name="nombre" id="nombre" [(ngModel)]="reserv.namevent">
             </div>
 
-            <div class="card-body">
-                <div>
-                    <label for="nombre">Nombre del Evento</label>
-                    <input class="ml-2 mb-3" type="text" name="nombre" id="nombre" [(ngModel)]="reserv.namevent">
-                </div>
-
-                <label for="" class="mt-4">Espacio Fisico</label>
-                <select class="ml-2 mb-4" [(ngModel)]="opcionSeleccionado" (change)="capturar()">
-                    <option value="0" selected disabled>Selecciona un Espacio</option>
-                    <option *ngFor="let espacio of espacios">
+            <label for="" class="mt-4">Espacio Fisico</label>
+            <select class="ml-2 mb-4" [(ngModel)]="opcionSeleccionado" (change)="capturar()" [ngModelOptions]="{standalone: true}">
+                <option value="0" selected disabled>Selecciona un Espacio</option>
+                <option *ngFor="let espacio of espacios" value="{{espacio.name}}" >
                     {{espacio.name}}
-                    </option>
-                </select>
+                </option>
+            </select>
+            <div ngSwitch="{{opcionSeleccionado}}">
 
-                <div *ngIf="opcionSeleccionado=='Auditorio'">
-                    
+                <div *ngSwitchCase="'Auditorio'">
                     <div class="d-inline" >
 
                         <label for="from">Hora Inicial: </label>
                         <select name="from" id="from" (change)="onHora($event)">
                             <option value="not" selected disabled>Selec Hora</option>
-                            <option value="7:00">7:00AM</option>
-                            <option value="8:00">8:00AM</option>
-                            <option value="9:00">9:00AM</option>
-                            <option value="10:00">10:00AM</option>
-                            <option value="11:00">11:00AM</option>
-                            <option value="12:00">12:00PM</option>
-                            <option value="13:00">1:00PM</option>
-                            <option value="14:00">2:00PM</option>
-                            <option value="15:00">3:00PM</option>
-                            <option value="16:00">4:00PM</option>
-                            <option value="17:00">5:00PM</option>
-                            <option value="18:00">6:00PM</option>
+                            <option value="07:00:00">7:00AM</option>
+                            <option value="08:00:00">8:00AM</option>
+                            <option value="09:00:00">9:00AM</option>
+                            <option value="10:00:00">10:00AM</option>
+                            <option value="11:00:00">11:00AM</option>
+                            <option value="12:00:00">12:00PM</option>
+                            <option value="13:00:00">1:00PM</option>
+                            <option value="14:00:00">2:00PM</option>
+                            <option value="15:00:00">3:00PM</option>
+                            <option value="16:00:00">4:00PM</option>
+                            <option value="17:00:00">5:00PM</option>
+                            <option value="18:00:00">6:00PM</option>
                         </select>
                     </div>
+
                     <div class="d-inline ml-3">
 
                         <label for="to">Hora Final: </label>
                         <select name="to" id="to" (change)="onHora1($event)">
                             <option value="not" selected disabled>Selec Hora</option>
-                            <option value="9:00">9:00AM</option>
-                            <option value="10:00">10:00AM</option>
-                            <option value="11:00">11:00AM</option>
-                            <option value="12:00">12:00PM</option>
-                            <option value="13:00">1:00PM</option>
-                            <option value="14:00">2:00PM</option>
-                            <option value="15:00">3:00PM</option>
-                            <option value="16:00">4:00PM</option>
-                            <option value="17:00">5:00PM</option>
-                            <option value="18:00">6:00PM</option>
-                            <option value="19:00">7:00PM</option>
-                            <option value="20:00">8:00PM</option>
+                            <option value="09:00:00">9:00AM</option>
+                            <option value="10:00:00">10:00AM</option>
+                            <option value="11:00:00">11:00AM</option>
+                            <option value="12:00:00">12:00PM</option>
+                            <option value="13:00:00">1:00PM</option>
+                            <option value="14:00:00">2:00PM</option>
+                            <option value="15:00:00">3:00PM</option>
+                            <option value="16:00:00">4:00PM</option>
+                            <option value="17:00:00">5:00PM</option>
+                            <option value="18:00:00">6:00PM</option>
+                            <option value="19:00:00">7:00PM</option>
+                            <option value="20:00:00">8:00PM</option>
+                        </select>
+                    </div>
+                        
+                </div>
+
+                <div *ngSwitchCase="'Sala de VideoConferencias 1'">
+                    <div class="d-inline" >
+
+                        <label for="from">Hora Inicial: </label>
+                        <select name="from" id="from" (change)="onHora($event)">
+                            <option value="not" selected disabled>Selec Hora</option>
+                            <option value="07:00:00">7:00AM</option>
+                            <option value="08:00:00">8:00AM</option>
+                            <option value="09:00:00">9:00AM</option>
+                            <option value="10:00:00">10:00AM</option>
+                            <option value="11:00:00">11:00AM</option>
+                            <option value="12:00:00">12:00PM</option>
+                            <option value="13:00:00">1:00PM</option>
+                            <option value="14:00:00">2:00PM</option>
+                            <option value="15:00:00">3:00PM</option>
+                            <option value="16:00:00">4:00PM</option>
+                            <option value="17:00:00">5:00PM</option>
+                            <option value="18:00:00">6:00PM</option>
                         </select>
                     </div>
 
-                    <div *ngSwitchCase="'Sala de VideoConferencias 1'">
-                        <div class="d-inline" >
+                    <div class="d-inline ml-3">
 
-                            <label for="from">Hora Inicial: </label>
-                            <select name="from" id="from" (change)="onHora($event)">
-                                <option value="not" selected disabled>Selec Hora</option>
-                                <option value="7:00">7:00AM</option>
-                                <option value="8:00">8:00AM</option>
-                                <option value="9:00">9:00AM</option>
-                                <option value="10:00">10:00AM</option>
-                                <option value="11:00">11:00AM</option>
-                                <option value="12:00">12:00PM</option>
-                                <option value="13:00">1:00PM</option>
-                                <option value="14:00">2:00PM</option>
-                                <option value="15:00">3:00PM</option>
-                                <option value="16:00">4:00PM</option>
-                                <option value="17:00">5:00PM</option>
-                                <option value="18:00">6:00PM</option>
-                            </select>
-                        </div>
-
-                        <div class="d-inline ml-3">
-
-                            <label for="to">Hora Final: </label>
-                            <select name="to" id="to" (change)="onHora1($event)">
-                                <option value="not" selected disabled>Selec Hora</option>
-                                <option value="8:00">8:00AM</option>
-                                <option value="9:00">9:00AM</option>
-                                <option value="10:00">10:00AM</option>
-                                <option value="11:00">11:00AM</option>
-                                <option value="12:00">12:00PM</option>
-                                <option value="13:00">1:00PM</option>
-                                <option value="14:00">2:00PM</option>
-                                <option value="15:00">3:00PM</option>
-                                <option value="16:00">4:00PM</option>
-                                <option value="17:00">5:00PM</option>
-                                <option value="18:00">6:00PM</option>
-                                <option value="19:00">7:00PM</option>
-                            </select>   
-                        </div>
+                        <label for="to">Hora Final: </label>
+                        <select name="to" id="to" (change)="onHora1($event)">
+                            <option value="not" selected disabled>Selec Hora</option>
+                            <option value="08:00:00">8:00AM</option>
+                            <option value="09:00:00">9:00AM</option>
+                            <option value="10:00:00">10:00AM</option>
+                            <option value="11:00:00">11:00AM</option>
+                            <option value="12:00:00">12:00PM</option>
+                            <option value="13:00:00">1:00PM</option>
+                            <option value="14:00:00">2:00PM</option>
+                            <option value="15:00:00">3:00PM</option>
+                            <option value="16:00:00">4:00PM</option>
+                            <option value="17:00:00">5:00PM</option>
+                            <option value="18:00:00">6:00PM</option>
+                            <option value="19:00:00">7:00PM</option>
+                        </select>   
                     </div>
                 </div>
-
-                <div>
-                    <label for="file" class="mt-4">Anexos</label>
-                    <input type="file" name="file" id="file" class="ml-2" (change)="selectFile($event)">
-                </div>
-
             </div>
 
-            <div class="card-footer text-center">
-                <button type="submit" class="btn btn-primary">Reservar</button>
+            <div>
+                <label for="anexos" class="mt-4">Anexos</label>
+                <input type="file" name="anexos" id="anexos" class="ml-2" >
             </div>
 
         </div>
-    </form>
+
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-primary">Reservar</button>
+        </div>
+
+    </div>
+ </form>
 </div>

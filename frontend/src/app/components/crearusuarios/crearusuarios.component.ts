@@ -37,7 +37,6 @@ export class CrearusuariosComponent implements OnInit {
    }
  
    onFacultad(e: any) {
-     //console.log(e.target.value);
      this.user.dependencia = e.target.value;
  }
  
@@ -57,7 +56,6 @@ export class CrearusuariosComponent implements OnInit {
    };
  
    getRoles(){
-     console.log("soy un rol")
      this.authService.getRoles().subscribe(
        res => {
          for(let i of Object.values(res)){
@@ -70,7 +68,6 @@ export class CrearusuariosComponent implements OnInit {
    };
  
    onRole(e: any) {
-     console.log(e.target.value);
      this.user.roles=[e.target.value];
                  };
    signUp(){

@@ -15,7 +15,7 @@ const reservaSchema=Schema({
     },
     user:{
         ref:"User",
-        type:Schema.Types.Map
+        type: Schema.Types.ObjectId
     },
     sitio:{
         type:String,

@@ -41,7 +41,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     HomeComponent,
     ReportesComponent,
     GestionarespaciosComponent,
-    CrearusuariosComponent
+    CrearusuariosComponent,
   ],
   imports: [
     BrowserModule,

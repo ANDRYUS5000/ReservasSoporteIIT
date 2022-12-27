@@ -39,7 +39,6 @@ export class GestionarespaciosComponent implements OnInit {
     this.espacio.tipoesp=e.target.value;
   };
   crearEspacio(){
-    console.log("-----------", this.espacio)
   this.authService.createEspace(this.espacio)
   .subscribe(res=>{
     this.bandera=true;
