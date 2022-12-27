@@ -1,5 +1,5 @@
 import app from './app'
-import '../database'
+import './database'
 import cors from 'cors'
 import bodyParser from 'body-parser';
 import http from 'http'
