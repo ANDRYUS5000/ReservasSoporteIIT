@@ -82,6 +82,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
+      alert("No se olvide de contactar al usuario y notificar la aprobación")
       this.reservaux=this.reservas
     })
   }
@@ -93,6 +94,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
+      alert("No se olvide notificar la modificacion")
       this.reservaux=this.reservas
     })
   }
@@ -104,6 +106,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
+      alert("No se olvide de contactar al usuario y notificar el rechazo")
       this.reservaux=this.reservas
     })
   }
