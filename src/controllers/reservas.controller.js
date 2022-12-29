@@ -56,6 +56,6 @@ export const upds=async(req,res)=> {
     getReservas(req,res)
 }
 export const updr=async(req,res)=> {
-    const r= await Reserva.findByIdAndUpdate(req.params.id, {state:'rechazado'}, {new:true})
+    const r= await Reserva.findByIdAndUpdate(req.params.id, {state:'no aprobado'}, {new:true})
     getReservas(req,res)
 }

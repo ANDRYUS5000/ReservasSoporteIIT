@@ -122,4 +122,6 @@ export class ReportesComponent implements OnInit {
       this.reservaux=this.reservas
     }
   }
+  
 }
+

@@ -19,7 +19,7 @@ const upload=multer({storage})
 
 const router= Router()
 
-router.post('/solicitar',reservaCtrl.crearReserva) //cambie el verify aqui
+router.post('/solicitar',reservaCtrl.crearReserva)
 router.post('/upload',upload.single('file'),reservaCtrl.upload)
 
 router.get('/report',reservaCtrl.getReservas)
