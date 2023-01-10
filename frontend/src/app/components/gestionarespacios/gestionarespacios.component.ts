@@ -55,6 +55,7 @@ export class GestionarespaciosComponent implements OnInit {
     this.authService.getEspacios().subscribe(
       res=>{
         this.espacios = res;
+        
       },
       err=>console.log(err)
     )

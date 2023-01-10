@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { IntermediumService } from 'src/app/services/intermedium.service';
 import { UserService } from 'src/app/services/user.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
-import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -95,7 +95,6 @@ name = document.getElementById("nombre")
 
   ngOnInit(): void {
     this.FileSelected=false
-    alert("Su reserva sera tenida en cuenta solo en el año presente")
   }
 
   selectFile($e: any): void {
@@ -122,7 +121,7 @@ name = document.getElementById("nombre")
           (await this.reserserv.saveFile(body)).subscribe()
         }
       })
-      alert("Reserva solicitada con éxito,será notificado por el personal de la oficina de Soporte IIT")
+      Swal.fire("Reserva solicitada exitosamente","Será notificado por el personal de la oficina de Soporte IIT","success")
     }
   }
 }
