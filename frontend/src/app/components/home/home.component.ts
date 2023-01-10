@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
   
 
   //------------------ Para pintar Fechas ------------------------------------//
-
   dependencia = {
     _id: '',
     id_unidad: '',
@@ -40,12 +39,7 @@ export class HomeComponent implements OnInit {
     anexo: '',
     createdAt: new Date
   }]
-  espacio={
-    name:'',
-    tipoesp:''
-  }
-  sitios:any=[]
-
+  
   lista: any;
   
   constructor(private reseserver: ReservasAdminService,
@@ -53,12 +47,6 @@ export class HomeComponent implements OnInit {
     private changeDetector: ChangeDetectorRef) {}
     
   ngOnInit(): void {
-    this.authService.getEspacios().subscribe(
-      res=>{
-        this.sitios = res;
-      },
-      err=>console.log(err)
-    )
     this.authService.getDependencias().subscribe(
       res => {
         
@@ -91,22 +79,6 @@ export class HomeComponent implements OnInit {
         this.calendarOptions.events=pintarEventos
       }
     )
-  }
-
-  onSitios($e:any){
-    this.eventos = this.reservas.map(function (task) {
-      return{
-        title: task.sitio + '     ' + 'RESERVADO',
-        start: task.fini,
-        end: task.fend,
-        color:'#395144',
-        state:task.state,
-      }
-    }).filter(e=>{
-      return e.state==='aprobado'
-    })
-    const pintarEventos:EventInput[]=this.eventos
-    this.calendarOptions.events=pintarEventos
   }
 
 
@@ -155,5 +127,6 @@ export class HomeComponent implements OnInit {
     hiddenDays: [0]
 
 }
+
 
 }

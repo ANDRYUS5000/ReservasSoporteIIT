@@ -95,7 +95,6 @@ name = document.getElementById("nombre")
 
   ngOnInit(): void {
     this.FileSelected=false
-    alert("Su reserva sera tenida en cuenta solo en el año presente")
   }
 
   selectFile($e: any): void {
