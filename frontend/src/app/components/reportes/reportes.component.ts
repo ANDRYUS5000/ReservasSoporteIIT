@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TitleStrategy } from '@angular/router';
-import * as e from 'cors';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
-import Swal from 'sweetalert2';
+import { DateRangePickerComponent } from 'ngx-daterange';
+import { IDateRangePickerOptions } from 'ngx-daterange/interfaces/IDateRangePickerOptions'
+import { IDateRange } from 'ngx-daterange/interfaces/IDateRange'
+import * as moment from 'moment'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reportes',
@@ -50,7 +52,7 @@ export class ReportesComponent implements OnInit {
             createdAt:new Date}]
   
   constructor(private reseserver:ReservasAdminService,
-              private authService:AuthService) { }
+              private authService:AuthService) {}
 
   ngOnInit(): void {
     this.reseserver.getReservas()
@@ -83,7 +85,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
-      Swal.fire("Reserva Aprobada","No se olvide de contactar al usuario y notificar la aprobación","success")
+      alert("No se olvide de contactar al usuario y notificar la aprobación")
       this.reservaux=this.reservas
     })
   }
@@ -107,7 +109,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
-      Swal.fire("Reserva No Aprobada","No se olvide de contactar al usuario y notificar el rechazo","error")
+      alert("No se olvide de contactar al usuario y notificar el rechazo")
       this.reservaux=this.reservas
     })
   }
@@ -123,6 +125,41 @@ export class ReportesComponent implements OnInit {
       this.reservaux=this.reservas
     }
   }
-  
+
+  onState($e:any){
+    if ($e!='') {
+      this.reservaux=this.reservas.filter(r=>r.state==$e)
+    }else{
+      this.reservaux=this.reservas
+    }
+  }
+
+  firstFieldOptions: IDateRangePickerOptions = {
+    labelText:'Filtrar por Fecha',
+    autoApply: false,
+    clickOutsideAllowed:false,
+    format: 'YYYY/MM/DD',
+    icons: 'default',
+    minDate: moment("2022-12"),
+    maxDate: moment().add(1, 'years'),
+    position:"right",
+    preDefinedRanges: [
+      {
+        name: "Esté mes",
+        value: {
+          start: moment().startOf('month'),
+          end: moment().endOf('month')
+        }
+      },
+      {
+        name: "Está semana",
+        value: {
+          start: moment().startOf('week'),
+          end: moment().endOf('week')
+        }
+      }
+    ],
+    validators: Validators.required,
+  }
 }
 

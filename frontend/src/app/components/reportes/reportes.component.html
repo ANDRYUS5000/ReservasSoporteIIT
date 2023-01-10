@@ -6,6 +6,23 @@
             <option *ngFor="let d of dependencias" value="{{d.nombre_unidad}}">
             </option>
         </datalist>
+        <div class="center">
+            <date-range-picker [options]="firstFieldOptions" [controlName]="'myDateRange'" #date></date-range-picker>
+        </div>
+    </div>
+    <div class="container">
+        <td (click)="onState('aprobado')">
+            <button class="btn btn-success">aprobado</button>
+        </td>
+        <td (click)="onState('no aprobado')">
+            <button class="btn btn-success">no aprobado</button>
+        </td>
+        <td (click)="onState('solicitado')">
+            <button class="btn btn-success">solicitado</button>
+        </td>
+        <td (click)="onState('cancelado')">
+            <button class="btn btn-success">cancelado</button>
+        </td>
     </div>
 </div>
 

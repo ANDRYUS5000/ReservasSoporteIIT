@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-//importar modulo de formularios
-import { FormsModule } from '@angular/forms'
-import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
-//importando modulo de estadisticas
-import { NgChartsModule } from 'ng2-charts';
+import { BrowserModule, HammerModule} from '@angular/platform-browser';
 
+//importar modulo de formularios
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,8 +25,7 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // must go before pl
 import  dayGridPlugin  from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
-import { EstsuperadminComponent } from './components/estsuperadmin/estsuperadmin.component';
-import { ReservasDoneUserComponent } from './components/reservas-done-user/reservas-done-user.component';
+import { NgxDateRangeModule } from 'ngx-daterange';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   timeGridPlugin,
@@ -47,8 +44,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ReportesComponent,
     GestionarespaciosComponent,
     CrearusuariosComponent,
-    EstsuperadminComponent,
-    ReservasDoneUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +51,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FormsModule,
     HttpClientModule,
     FullCalendarModule,
-    NgChartsModule
+    HammerModule,
+    NgxDateRangeModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AuthGuard,
@@ -66,6 +63,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
       multi:true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

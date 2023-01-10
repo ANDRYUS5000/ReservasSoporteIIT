@@ -7,12 +7,10 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { HomeComponent } from './components/home/home.component'
 import { CrearusuariosComponent } from './components/crearusuarios/crearusuarios.component';
-import { EstsuperadminComponent } from './components/estsuperadmin/estsuperadmin.component';
 
 import { AuthGuard } from './auth.guard';
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { GestionarespaciosComponent } from './components/gestionarespacios/gestionarespacios.component';
-import { ReservasDoneUserComponent } from './components/reservas-done-user/reservas-done-user.component';
 const routes: Routes = [
   //rutas para renderizar los componentes
   {
@@ -29,8 +27,8 @@ const routes: Routes = [
     component:SigninComponent
   },
   {
-    path:'estsadmin',
-    component:EstsuperadminComponent,
+    path:'admin',
+    component:ReservasadminComponent,
     canActivate:[AuthGuard]
   },
   {
@@ -56,10 +54,6 @@ const routes: Routes = [
     path:'createspace',
     component:GestionarespaciosComponent,
     canActivate:[AuthGuard]
-  },
-  {
-    path:'misreservas',
-    component:ReservasDoneUserComponent
   }
 ];
 

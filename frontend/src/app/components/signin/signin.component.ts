@@ -29,7 +29,10 @@ export class SigninComponent implements OnInit {
   login(){
     this.intmService.login(this.user);
     
- 
+    if(this.intmService.getMensaje()!=="")
+    {
+      this.mensaje=this.intmService.getMensaje();  
+      this.bandera=true;
       try {
         setTimeout(()=>{
           this.authservice.logOut()
@@ -44,4 +47,4 @@ export class SigninComponent implements OnInit {
      
     
   }
-
+}

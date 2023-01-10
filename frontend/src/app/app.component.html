@@ -11,20 +11,16 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/reservas" routerLinkActive="active">Solicitar Reserva</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/misreservas" routerLinkActive="active">Mis Reservas</a>
-          </li>
         </ng-container>
         
-        <ng-container *ngIf="intmService.esSuperAdmin()">
+        <ng-container *ngIf="intmService.esAdmin()">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/estsadmin" routerLinkActive="active">Estadisticas</a>
+                <a class="nav-link" routerLink="/admin" routerLinkActive="active">Gestionar Reservas</a>
             </li>      
           </ng-container>
         <ng-container class="nav-item" *ngIf="intmService.esAdmin() || intmService.esSuperAdmin()" >
-          <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Gestionar Reservas</a>
+          <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reporte de Reservas</a>
         </ng-container>
-      
         <ng-container *ngIf="intmService.esSuperAdmin()">
           <li class="nav-item">
             <a class="nav-link" routerLink="/registeruser" routerLinkActive="active">Crear Usuarios</a>
