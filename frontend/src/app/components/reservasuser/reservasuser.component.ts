@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/angular';
+import { CalendarOptions } from '@fullcalendar/core';
 import { compareAsc, compareDesc, format, parse, parseISO, startOfToday } from "date-fns";
 import { AuthService } from 'src/app/services/auth.service';
 import { IntermediumService } from 'src/app/services/intermedium.service';
 import { UserService } from 'src/app/services/user.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
-import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -42,7 +42,7 @@ name = document.getElementById("nombre")
 // -------------------------------------------------- Calendar Options ---------------------------------------------- //
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth', // bind is important!
-    dateClick: this.handleDateClick.bind(this),
+    eventClick: this.handleDateClick.bind(this),
     
     hiddenDays: [0]
 
@@ -121,7 +121,7 @@ name = document.getElementById("nombre")
           (await this.reserserv.saveFile(body)).subscribe()
         }
       })
-      alert("Reserva solicitada con éxito,será notificado por el personal de la oficina de Soporte IIT")
+      Swal.fire("Reserva solicitada exitosamente","Será notificado por el personal de la oficina de Soporte IIT","success")
     }
   }
 }

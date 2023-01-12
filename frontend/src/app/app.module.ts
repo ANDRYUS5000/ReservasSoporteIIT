@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 //importar modulo de formularios
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
+//importando modulo de estadisticas
+import { NgChartsModule } from 'ng2-charts';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,16 +23,10 @@ import { CrearusuariosComponent } from './components/crearusuarios/crearusuarios
 
 // ---------------------------------
 
-import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
-import  dayGridPlugin  from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid'; // a plugin!
-import interactionPlugin from '@fullcalendar/interaction';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { EstsuperadminComponent } from './components/estsuperadmin/estsuperadmin.component';
+import { ReservasDoneUserComponent } from './components/reservas-done-user/reservas-done-user.component';
 
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
-  timeGridPlugin,
-  dayGridPlugin,
-  interactionPlugin
-]);
 
 @NgModule({
   declarations: [
@@ -42,13 +39,16 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ReportesComponent,
     GestionarespaciosComponent,
     CrearusuariosComponent,
+    EstsuperadminComponent,
+    ReservasDoneUserComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    FullCalendarModule
+    FullCalendarModule,
+    NgChartsModule
   ],
   providers: [
     AuthGuard,

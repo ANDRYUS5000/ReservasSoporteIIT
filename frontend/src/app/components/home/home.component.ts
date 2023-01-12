@@ -1,7 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CalendarOptions, DateSelectArg, EventInput } from '@fullcalendar/angular';
+import { CalendarOptions, DateSelectArg, EventInput } from '@fullcalendar/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 
 @Component({
   selector: 'app-home',
@@ -90,12 +93,13 @@ export class HomeComponent implements OnInit {
   
   calendarOptions : CalendarOptions = {
     // locale: esLocale,
-    allDaySlot: false,
+
+    plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ],
 
     slotDuration: '00:15',
 
     headerToolbar: {
-      left: 'timeGridWeek,timeGridDay',
+      left: 'dayGridMonth,timeGridWeek,timeGridDay',
       center: 'title',
       right: 'prev,next today',
     },

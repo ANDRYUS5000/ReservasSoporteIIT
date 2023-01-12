@@ -3,6 +3,7 @@ import { TitleStrategy } from '@angular/router';
 import * as e from 'cors';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reportes',
@@ -82,7 +83,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
-      alert("No se olvide de contactar al usuario y notificar la aprobación")
+      Swal.fire("Reserva Aprobada","No se olvide de contactar al usuario y notificar la aprobación","success")
       this.reservaux=this.reservas
     })
   }
@@ -106,7 +107,7 @@ export class ReportesComponent implements OnInit {
       this.reservas.sort((a,b)=>{
         return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
       })
-      alert("No se olvide de contactar al usuario y notificar el rechazo")
+      Swal.fire("Reserva No Aprobada","No se olvide de contactar al usuario y notificar el rechazo","error")
       this.reservaux=this.reservas
     })
   }

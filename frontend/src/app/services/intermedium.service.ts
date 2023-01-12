@@ -4,12 +4,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 
+import Swal from 'sweetalert2';
+
 @Injectable({
   providedIn: 'root'
 })
 export class IntermediumService {
-  
-  mensaje='';
+
   tipo_user='';
   dependencia='';
   constructor(private authService:AuthService,
@@ -39,7 +40,7 @@ export class IntermediumService {
           this.router.navigate(['/registeruser'])
       },
       err=>{console.log(err),
-        this.mensaje="Error con el usuario o la clave"}
+        Swal.fire("Error con el usuario o la clave","Ingrese nuevamente los datos","error")}
     );
   }
 
@@ -66,9 +67,7 @@ export class IntermediumService {
     }
     else return false;
   }
-  getMensaje():string{
-    return this.mensaje
-  }
+ 
   getid():String{
     let id = localStorage.getItem('id')
     if (id) {

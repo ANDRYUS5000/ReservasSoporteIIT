@@ -1,0 +1,36 @@
+<div class="container pt-5">
+    <div class="form-group">
+        <label class="col-sm-12">Semestre</label>
+        <div class="col-sm-12">
+            <select class="form-control"  ng-disabled="perfil_isEdit"
+            name="roles" id="roles" required >
+                <option value="" selected>--- Seleccione el semestre ---</option>
+                <option *ngFor="let semestre of semestres"  ngDefaultControl (change)="onSemestre($event)"
+                value="{{semestre.valor}}">{{semestre.valor}}-{{semestre.name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="row">
+            
+            <div class="col-20 bt-20">
+                <h1>Estadísticas Reservas Bloque tecnológico</h1>
+                <div class="chart-wrapper">
+                    <canvas baseChart
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                 
+                    [legend]="lineChartLegend"
+                    [plugins]="lineChartPlugins"
+                    >
+                    </canvas>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

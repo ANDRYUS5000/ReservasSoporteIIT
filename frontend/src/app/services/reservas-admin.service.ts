@@ -38,4 +38,17 @@ export class ReservasAdminService {
   UpdateStateR(id:string){
     return this.http.get<any>(this.URL+'/resmodr/'+id)
   }
+
+  UpdateStateCancel(id:string){
+    return this.http.get<any>(this.URL+'/resmodc/'+id)
+  }
+  GetReservasUser(id:string){
+    return this.http.get<any>(this.URL+'/resuser/'+id)
+  }
+
+  removeReserva(id:string)
+  {
+    return this.http.delete<any>(this.URL+'/removeres/'+id)
+  }
+  
 }
