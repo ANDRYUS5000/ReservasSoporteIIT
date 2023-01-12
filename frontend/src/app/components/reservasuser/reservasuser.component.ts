@@ -6,7 +6,10 @@ import { IntermediumService } from 'src/app/services/intermedium.service';
 import { UserService } from 'src/app/services/user.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
 import Swal from 'sweetalert2';
-
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-reservasuser',
@@ -42,8 +45,8 @@ name = document.getElementById("nombre")
 // -------------------------------------------------- Calendar Options ---------------------------------------------- //
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth', // bind is important!
-    eventClick: this.handleDateClick.bind(this),
-    
+    plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
+    dateClick: this.handleDateClick.bind(this),
     hiddenDays: [0]
 
   };
