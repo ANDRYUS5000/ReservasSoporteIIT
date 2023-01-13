@@ -42,8 +42,8 @@ export class HomeComponent implements OnInit {
     anexo: '',
     createdAt: new Date
   }]
-  
-  lista: any;
+
+  sitios=['1','2','3']
   
   constructor(private reseserver: ReservasAdminService,
     private authService: AuthService,
@@ -128,9 +128,10 @@ export class HomeComponent implements OnInit {
       meridiem: 'lowercase'
     },
 
-    hiddenDays: [0]
+    hiddenDays: [0],
 
-}
+    contentHeight:400,
+    
 
-
+  }
 }

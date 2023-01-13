@@ -95,6 +95,7 @@ export const dependencias = function (req, res) {
 };
 
 export const getUser = async(req, res)=>{
+    console.log(req.params.id);
     const user=User.findOne({_id:req.params.id});
     user.exec((err, user) =>{
         if (err) {

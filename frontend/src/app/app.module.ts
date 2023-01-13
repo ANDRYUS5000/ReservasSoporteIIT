@@ -26,6 +26,8 @@ import { CrearusuariosComponent } from './components/crearusuarios/crearusuarios
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EstsuperadminComponent } from './components/estsuperadmin/estsuperadmin.component';
 import { ReservasDoneUserComponent } from './components/reservas-done-user/reservas-done-user.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 
 @NgModule({
@@ -44,11 +46,13 @@ import { ReservasDoneUserComponent } from './components/reservas-done-user/reser
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     FullCalendarModule,
-    NgChartsModule
+    NgChartsModule,
+    MatAutocompleteModule
   ],
   providers: [
     AuthGuard,
