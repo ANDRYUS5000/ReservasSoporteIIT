@@ -37,7 +37,10 @@ export class ReservasDoneUserComponent implements OnInit {
       email: '',
       telefono: ''
     },
-    sitio: '',
+    sitio: {
+      name:'',
+      tipo:''
+    },
     state: '',
     anexo: '',
     createdAt: new Date
@@ -55,7 +58,10 @@ export class ReservasDoneUserComponent implements OnInit {
       email: '',
       telefono: ''
     },
-    sitio: '',
+    sitio: {
+      name:'',
+      tipo:''
+    },
     state: '',
     anexo: '',
     createdAt: new Date

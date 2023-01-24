@@ -30,7 +30,10 @@ export class ReportesComponent implements OnInit {
                   dependencia:[this.dependencia],
                   email:'',
                   telefono:''}, 
-            sitio:'', 
+                  sitio: {
+                    name:'',
+                    tipo:''
+                  },
             state:'', 
             anexo:'',
             createdAt:new Date}]
@@ -44,7 +47,10 @@ export class ReportesComponent implements OnInit {
                   dependencia:[this.dependencia],
                   email:'',
                   telefono:''}, 
-            sitio:'', 
+            sitio: {
+              name:'',
+              tipo:''
+            },
             state:'', 
             anexo:'',
             createdAt:new Date}]
