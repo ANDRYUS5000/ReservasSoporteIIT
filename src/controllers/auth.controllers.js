@@ -95,7 +95,6 @@ export const dependencias = function (req, res) {
 };
 
 export const getUser = async(req, res)=>{
-    console.log(req.params.id);
     const user=User.findOne({_id:req.params.id});
     user.exec((err, user) =>{
         if (err) {
@@ -187,7 +186,6 @@ export const tipo=async(req,res)=>{
     const array=[]
     req.body.arr.forEach(async ele => {
         await EspFis.findOne({name:ele.name}).then(async es=>{
-            console.log(es);
             await TipoFis.find({_id:es.tipo_espacio}).then(ess=>{
                 return res.status(200).json(ess);
             })

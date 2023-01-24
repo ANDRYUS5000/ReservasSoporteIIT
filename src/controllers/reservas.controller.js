@@ -13,9 +13,7 @@ export const crearReserva=async(req,res)=> {
                 name:sitio,
                 tipo:ess[0].name
             }
-            console.log(sitex);
             const r=new Reserva({fini, fend, namevent, user, sitio:sitex, state})
-            console.log(r);
             await r.save()
             .then((reserva)=>{
                 return res.status(200).json(reserva)
@@ -70,4 +68,32 @@ export const upds=async(req,res)=> {
 export const updr=async(req,res)=> {
     const r= await Reserva.findByIdAndUpdate(req.params.id, {state:'no aprobado'}, {new:true})
     getReservas(req,res)
+}
+
+export const updcancel=async(req,res)=> {
+    const r= await Reserva.findByIdAndUpdate(req.params.id, {state:'cancelado'}, {new:true})
+    getReservas(req,res)
+}
+
+export const removeReserva = async (req, res) => {
+    console.log("eliminar", req.body)
+    try {
+        const r = await Reserva.findByIdAndDelete(req.params.id)
+        reservaUser(req, res)
+        return true;
+    }
+    catch (error) {
+        return false;
+    }
+}
+
+export const reservaUser = async (req, res) => {
+    const reservas = await Reserva.find({});
+    const resUser = [];
+    for (let r of reservas) { // este for trabaja sicronicamente con el codigo
+        if (r.user._id == req.params.id) {
+            resUser.push(r)
+        }
+    }
+    return res.status(200).json(resUser)
 }

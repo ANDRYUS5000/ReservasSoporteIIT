@@ -23,9 +23,11 @@ router.post('/solicitar',reservaCtrl.crearReserva)
 router.post('/upload',upload.single('file'),reservaCtrl.upload)
 
 router.get('/report',reservaCtrl.getReservas)
+router.get('/resuser/:id',reservaCtrl.reservaUser)
 router.get('/files/:id', reservaCtrl.download)
 router.get('/resmoda/:id', reservaCtrl.upda)
 router.get('/resmods/:id', reservaCtrl.upds)
 router.get('/resmodr/:id', reservaCtrl.updr)
+router.get('/resmodc/:id', reservaCtrl.updcancel)
 
 export default router;

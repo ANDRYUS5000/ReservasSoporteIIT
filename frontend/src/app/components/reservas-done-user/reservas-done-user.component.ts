@@ -1,8 +1,10 @@
-import { Type } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { IntermediumService } from 'src/app/services/intermedium.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-reservas-done-user',
@@ -65,16 +67,22 @@ export class ReservasDoneUserComponent implements OnInit {
   idUser: any = ''
 
   constructor(private reseserver: ReservasAdminService,
-    private userService: UserService) {
+    private userService: UserService,
+    private router:Router,
+    private intmService:IntermediumService,
+    private authService:AuthService) {
     this.idUser = this.userService.getuser()
   }
 
 
   ngOnInit(): void {
-    this.reseserver.GetReservasUser(this.idUser)
+    if(this.intmService.esUser())
+    {
+      this.reseserver.GetReservasUser(this.idUser)
       .subscribe(
         res => {
           this.reservas = res;
+          this.reservaux=[...this.reservas]
           this.reservas.sort((a, b) => {
             return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
           })
@@ -83,71 +91,36 @@ export class ReservasDoneUserComponent implements OnInit {
             if (a.state > b.state) { return 1; }
             else return 0
           })
-
-        //   // filtra las reservas aprobadas
-        //   let tmpApro = this.reservas.filter((reserva) => {
-        //     return reserva.state == 'aprobado';
-        //   })
-
-        //   // filtra no aprobadas
-        //   let tmpNap = this.reservas.filter((reserva) => {
-        //     return reserva.state == 'no aprobado';
-        //   })
-
-        //   //filtra solicitadas
-        //   let tmpNmd = this.reservas.filter((reserva) => {
-        //     return reserva.state == 'solicitado';
-        //   })
-
-        //   //filtra canceladas
-        //   let tmpCancel = this.reservas.filter((reserva) => {
-        //     return reserva.state == 'cancelado'
-        //   })
-        //   //recorre reservas aprobadas y las agrega
-        //   tmpApro.forEach((reserva) => {
-        //     this.dataApro.push(reserva)
-        //   })
-
-        //   //recorre reservas no aprobadas y las agrega
-        //   tmpNap.forEach((reserva) => {
-        //     this.dataNap.push(reserva)
-        //   })
-
-        //   //recorre reservas solicitadas y las agregas
-        //   tmpNmd.forEach((reserva) => {
-        //     this.dataNmd.push(reserva)
-        //   })
-        //   //recorre reservas canceladas y las agrega
-        //   tmpCancel.forEach((reserva) => {
-        //     this.dataCancel.push(reserva)
-        //   })
-        // }
-      // )
-          
-  }
-      )}
-
-
-    onState($e:any)
-      {
-        if($e!=''){
-          this.reservaux=this.reservas.filter(reserva=>reserva.state==$e)
         }
-        else{
-          this.reservaux=this.reservas
-        }
-      }
- 
- noCancelado():boolean
- {
-  if(this.reservaux.length!=0)
-  {
-    if (this.reservaux[0].state!='cancelado') {
-      return true
+      )
+    }
+    else{
+      Swal.fire("No tiene autorización","","error")
+          this.authService.logOut()
+          this.router.navigate(['/signin'])
     }
   }
-  return false
- } 
+
+  onState($e:any)
+  {
+    if($e!=''){
+      this.reservaux=this.reservas.filter(reserva=>reserva.state==$e)
+    }
+    else{
+      this.reservaux=this.reservas
+    }
+  }
+ 
+  noCancelado():boolean
+  {
+    if(this.reservaux.length!=0)
+    {
+      if (this.reservaux[0].state!='cancelado') {
+        return true
+      }
+    }
+    return false
+  } 
   
   removeReserva(id: string) {
     this.reseserver.removeReserva(id).subscribe(
@@ -156,8 +129,6 @@ export class ReservasDoneUserComponent implements OnInit {
       }
     );
     location.reload()
-
-
   }
 
   cancelReserva(id: string) {
@@ -186,5 +157,4 @@ export class ReservasDoneUserComponent implements OnInit {
       });
 
   }
-
 }

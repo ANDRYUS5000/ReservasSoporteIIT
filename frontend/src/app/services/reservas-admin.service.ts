@@ -42,6 +42,7 @@ export class ReservasAdminService {
   UpdateStateCancel(id:string){
     return this.http.get<any>(this.URL+'/resmodc/'+id)
   }
+  
   GetReservasUser(id:string){
     return this.http.get<any>(this.URL+'/resuser/'+id)
   }
