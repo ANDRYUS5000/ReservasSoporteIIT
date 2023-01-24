@@ -117,7 +117,9 @@ export const tipoEspFis = function (req, res) {
             });
         }
         
-        return res.status(200).json(tiposEspFis);
+        return res.status(200).json(tiposEspFis.map(r=>{
+            return r.name
+        }));
     });
 };
 
@@ -166,7 +168,6 @@ export const registrarUsuario=async(req,res)=>{
    
 }
 
-
 export const espacios = function (req, res) {
     let espacios = EspFis.find({}).populate('tipo_espacio');
     espacios.exec(function (err, espacios) {
@@ -180,3 +181,16 @@ export const espacios = function (req, res) {
         return res.status(200).json(espacios);
     });
 };
+
+export const tipo=async(req,res)=>{
+    //body({arr,name})
+    const array=[]
+    req.body.arr.forEach(async ele => {
+        await EspFis.findOne({name:ele.name}).then(async es=>{
+            console.log(es);
+            await TipoFis.find({_id:es.tipo_espacio}).then(ess=>{
+                return res.status(200).json(ess);
+            })
+        })
+    });
+}

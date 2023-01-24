@@ -1,23 +1,35 @@
 const Reserva = require('../models/reserva')
 import User from '../models/user'
+import TipoFis from '../models/tipoEspFis'
+import EspFis from '../models/espaciofisico'
 const fs = require('fs');
 const mongoose = require('mongoose');
 
 export const crearReserva=async(req,res)=> {
     const {fini, fend, namevent, user, sitio, state} = req.body
-    const r=new Reserva({fini, fend, namevent, user,sitio, state})
-    await r.save()
-    .then((reserva)=>{
-        return res.status(200).json(reserva)
-    })
-    .catch(err=>{
-        console.log(err);
-        res.json(':/')
+    await EspFis.findOne({name:sitio}).then(async es=>{
+        await TipoFis.find({_id:es.tipo_espacio}).then(async ess=>{
+            let sitex={
+                name:sitio,
+                tipo:ess[0].name
+            }
+            console.log(sitex);
+            const r=new Reserva({fini, fend, namevent, user, sitio:sitex, state})
+            console.log(r);
+            await r.save()
+            .then((reserva)=>{
+                return res.status(200).json(reserva)
+            })
+            .catch(err=>{
+                console.log(err);
+                res.json(':/')
+            })
+        })
     })
 }
 export const getReservas=async(req,res)=> {
     const reservas = await Reserva.find({});
-    for (let r of reservas) { // este for trabaja sicronicamente con el codigo
+    for (let r of reservas) { // este ciclo for trabaja sicronicamente con el codigo
         const s=await User.findOne(r.user).populate(['roles','dependencia'])
         r.user = s
     }

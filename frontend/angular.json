@@ -23,8 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.css"
+              "src/theme.scss"
             ],
             "scripts": []
           },
@@ -91,8 +90,7 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.css"
+              "src/theme.scss"
             ],
             "scripts": []
           }

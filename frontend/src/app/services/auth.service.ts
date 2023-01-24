@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
+import {of} from 'rxjs'
+import { tap, startWith, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -14,7 +16,15 @@ export class AuthService {
   constructor(private http:HttpClient,
     private router:Router,
     private ususer:UserService
-    ) {}
+  ) {}
+
+  opts = [];
+
+  getData() {
+    return this.opts.length ?
+      of(this.opts) :
+      this.http.get<any>(this.URL+'/auth/tipoespfis').pipe(tap(data => this.opts = data))
+  }
 
   signUp(user:any){
    return this.http.post<any>(this.URL+'/auth/signup',user);
@@ -45,9 +55,13 @@ export class AuthService {
     return this.http.get(this.URL +'/auth/roles');
   }
   getTiposEspFis(){
-    return this.http.get(this.URL+'/auth/tipoespfis');
+    return this.http.get<string[]>(this.URL+'/auth/tipoespfis');
   }
   getEspacios(){
     return this.http.get(this.URL+'/auth/espacios');
+  }
+
+  getTipEsp(a:any){
+    return this.http.post<any>(this.URL+'/auth/findtipe',a);
   }
 }

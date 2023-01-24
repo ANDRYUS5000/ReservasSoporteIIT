@@ -18,8 +18,7 @@ const reservaSchema=Schema({
         type: Schema.Types.ObjectId
     },
     sitio:{
-        type:String,
-        enum: ["Sala de VideoConferencias 1","Sala de VideoConferencias 2","Auditorio"],
+        type:Object,
         require:[true]
     },
     state:{

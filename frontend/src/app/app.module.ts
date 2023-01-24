@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 //importar modulo de formularios
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 //importando modulo de estadisticas
 import { NgChartsModule } from 'ng2-charts';
@@ -23,11 +23,14 @@ import { CrearusuariosComponent } from './components/crearusuarios/crearusuarios
 
 // ---------------------------------
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EstsuperadminComponent } from './components/estsuperadmin/estsuperadmin.component';
 import { ReservasDoneUserComponent } from './components/reservas-done-user/reservas-done-user.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete'
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input'
+import {MatButtonModule} from '@angular/material/button'
 
 
 @NgModule({
@@ -49,10 +52,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     FullCalendarModule,
     NgChartsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
   ],
   providers: [
     AuthGuard,

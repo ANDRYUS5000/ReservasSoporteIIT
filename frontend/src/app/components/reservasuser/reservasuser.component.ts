@@ -48,7 +48,6 @@ name = document.getElementById("nombre")
     plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
     dateClick: this.handleDateClick.bind(this),
     hiddenDays: [0]
-
   };
 
   handleDateClick(arg: any) {

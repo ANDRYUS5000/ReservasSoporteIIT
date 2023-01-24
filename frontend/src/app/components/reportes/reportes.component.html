@@ -1,7 +1,9 @@
 <div class="form-group">
     <label class="col-sm-12">Dependencias</label>
     <div class="col-sm-12">
-        <input list="menace" name="menace" class="form-control" placeholder="Filtrar por dependencia" (change)="onFacultad($event)">
+        <input list="menace" name="menace" class="form-control" placeholder="Filtrar por dependencia"
+            (change)="onFacultad($event)"
+        >
         <datalist id="menace">
             <option *ngFor="let d of dependencias" value="{{d.nombre_unidad}}">
             </option>
