@@ -88,6 +88,7 @@ name = document.getElementById("nombre")
 
   filetmp:any
   FileSelected:boolean=false
+  FileAllowed:boolean=false
 
   constructor(public authservice:AuthService,
     public intmserver:IntermediumService,
@@ -102,10 +103,23 @@ name = document.getElementById("nombre")
   selectFile($e: any): void {
     this.FileSelected=true
     const [file] = $e.target.files
-    this.filetmp={
-      fileraw:file,
-      filename:file.name
+    let extensiones = ["jpg", "png", "jpeg","docx","odt","xlsx","xls","ods"];
+    var extension=file.name.split(".").slice(-1)
+    console.log(extension)
+    if(extensiones.indexOf(extension[0])!==-1)
+    {
+      console.log("si está")
+      this.filetmp={
+        fileraw:file,      
+        filename:file.name
+      }
+      this.FileAllowed=true
+      Swal.fire("Registro exitoso","Su archivo ha sido adjuntado","success")
+       
     }
+    else{
+      Swal.fire("Error","Tipo de archivo no permitido","error")
+    }    
   }
 
   async Request(){
@@ -115,15 +129,21 @@ name = document.getElementById("nombre")
       this.reserv.fend=this.end
       this.reserv.user=localStorage.getItem('id')
       this.reserv.state='solicitado'
-      await (await this.reserserv.solReserva(this.reserv)).subscribe(async(res)=>{
-        if (this.FileSelected) {
-          const body=new FormData()
-          body.append('file',this.filetmp.fileraw, this.filetmp.filename);
-          body.append('res',res._id);
-          (await this.reserserv.saveFile(body)).subscribe()
-        }
-      })
-      Swal.fire("Reserva solicitada exitosamente","Será notificado por el personal de la oficina de Soporte IIT","success")
+      if(this.FileAllowed)
+      {
+        await (await this.reserserv.solReserva(this.reserv)).subscribe(async(res)=>{
+          if (this.FileSelected) {
+            const body=new FormData()
+            body.append('file',this.filetmp.fileraw, this.filetmp.filename);
+            body.append('res',res._id);
+            (await this.reserserv.saveFile(body)).subscribe()
+          }
+        })
+        Swal.fire("Reserva solicitada exitosamente","Será notificado por el personal de la oficina de Soporte IIT","success")
+      }
+      else{
+        Swal.fire("Error","No se permite realizar la reserva, verifique el tipo de archivo","error")
+      }
     }
   }
 }

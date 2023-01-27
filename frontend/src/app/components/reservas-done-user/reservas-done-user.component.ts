@@ -88,7 +88,6 @@ export class ReservasDoneUserComponent implements OnInit {
       .subscribe(
         res => {
           this.reservas = res;
-          this.reservaux=[...this.reservas]
           this.reservas.sort((a, b) => {
             return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
           })
@@ -97,6 +96,7 @@ export class ReservasDoneUserComponent implements OnInit {
             if (a.state > b.state) { return 1; }
             else return 0
           })
+          this.reservaux=[...this.reservas]
         }
       )
     }

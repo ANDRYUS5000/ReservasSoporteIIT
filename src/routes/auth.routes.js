@@ -15,10 +15,9 @@ verifySingup.checkDependencia,authCtrl.registrarUsuario)
 
 router.post('/crearespacio', verifySingup.checkEspacioExist, authCtrl.crearEspacio)
 
-router.post('/findtipe', authCtrl.tipo)
-
 router.get('/dependencias', authCtrl.dependencias)
 router.get('/tipoespfis',authCtrl.tipoEspFis)
+router.get('/tipoEspFisCode',authCtrl.tipoEspFisCode)
 
 router.get('/roles',authCtrl.roles)
 router.get('/espacios',authCtrl.espacios)

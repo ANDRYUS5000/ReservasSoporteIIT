@@ -66,7 +66,8 @@ export class ReportesComponent implements OnInit {
         this.reservas.sort((a,b)=>{
           return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
         })
-        this.reservaux=this.reservas
+        this.reservaux=[...this.reservas]
+        console.log(this.reservaux);
       }
     )
     this.authService.getDependencias().subscribe(

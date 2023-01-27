@@ -12,7 +12,7 @@
                     matInput
                     [formControl]="myControl"
                     [matAutocomplete]="auto"
-                    (change)="wea($event)">
+                    (change)="verify($event)">
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="filter($event)">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                         {{option}}

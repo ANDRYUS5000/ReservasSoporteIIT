@@ -92,6 +92,7 @@ export const reservaUser = async (req, res) => {
     const resUser = [];
     for (let r of reservas) { // este for trabaja sicronicamente con el codigo
         if (r.user._id == req.params.id) {
+            console.log(`user ${r.user._id} param ${req.params.id}`);
             resUser.push(r)
         }
     }

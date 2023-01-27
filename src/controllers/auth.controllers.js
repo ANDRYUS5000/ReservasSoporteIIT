@@ -64,16 +64,17 @@ export const signIn=async(req,res)=>{
 
 export const crearEspacio = async (req, res) => {
     const {name,tipoesp}=req.body;
-
     const newEspFis=new EspFis({
-        name,
-        tipoesp
+        name
     })
    
     if (tipoesp){
         const foundTipo=await TipoFis.find({name:{$in: tipoesp}});
         let tipo = foundTipo[0].toJSON()._id
         newEspFis.tipo_espacio = tipo;
+        const l=(await EspFis.find({tipo_espacio:foundTipo[0]._id})).length
+        newEspFis.code=foundTipo[0].code + l + 1
+        console.log(newEspFis.code);
     }
     const savedEsp=await newEspFis.save();
     
@@ -115,9 +116,23 @@ export const tipoEspFis = function (req, res) {
                 error: err
             });
         }
-        
         return res.status(200).json(tiposEspFis.map(r=>{
             return r.name
+        }));
+    });
+};
+
+export const tipoEspFisCode = function (req, res) {
+    let tiposEspFis = TipoFis.find({});
+    tiposEspFis.exec(function (err, tiposEspFis) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Error al obtener los tipos de espacios físicos',
+                error: err
+            });
+        }
+        return res.status(200).json(tiposEspFis.map(r=>{
+            return {name:r.name,code:r.code}
         }));
     });
 };
@@ -176,19 +191,6 @@ export const espacios = function (req, res) {
                 error: err
             });
         }
-        
         return res.status(200).json(espacios);
     });
 };
-
-export const tipo=async(req,res)=>{
-    //body({arr,name})
-    const array=[]
-    req.body.arr.forEach(async ele => {
-        await EspFis.findOne({name:ele.name}).then(async es=>{
-            await TipoFis.find({_id:es.tipo_espacio}).then(ess=>{
-                return res.status(200).json(ess);
-            })
-        })
-    });
-}

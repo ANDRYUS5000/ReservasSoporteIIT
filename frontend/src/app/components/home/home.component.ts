@@ -28,7 +28,8 @@ export class HomeComponent implements OnInit {
     tipo_unidad: ''
   }
   dependencias = [this.dependencia]
-  reservas = [{
+  reservas = [
+    {
     _id: '',
     fini: '',
     fend: '',
@@ -48,7 +49,8 @@ export class HomeComponent implements OnInit {
     state: '',
     anexo: '',
     createdAt: new Date
-  }]
+    }
+  ]
   
   constructor(private reseserver: ReservasAdminService,
     private authService: AuthService) {
@@ -157,9 +159,10 @@ export class HomeComponent implements OnInit {
   private _filter(value: string): Observable<any[]> {
     return this.authService.getData()
     .pipe(
-      map(response => response.filter((option:string) => {
+      map(response => response.filter((option:any) => {
         return option.toLowerCase().indexOf(value.toLowerCase()) === 0
-      }))
+      })
+      )
     )
   }
 
@@ -176,7 +179,7 @@ export class HomeComponent implements OnInit {
     //   const body={name:ev.title} //EL POST FUNCIONA CON OBJECTS 
   }
 
-  wea($e:any){
+  verify($e:any){
     if ($e.target.value==='') {
       this.eventox=[...this.eventos]
       this.calendarOptions.events=[...this.eventox]

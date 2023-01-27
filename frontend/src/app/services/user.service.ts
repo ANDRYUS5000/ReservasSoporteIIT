@@ -5,10 +5,13 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
-  private user=localStorage.getItem('id')
-  constructor() { }
+  private user
+  constructor() {
+    this.user=localStorage.getItem('id')
+  }
 
   getuser(){
+    this.user=localStorage.getItem('id')
     return this.user
   }
 }

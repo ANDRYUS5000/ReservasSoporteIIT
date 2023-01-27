@@ -23,7 +23,12 @@ export class AuthService {
   getData() {
     return this.opts.length ?
       of(this.opts) :
-      this.http.get<any>(this.URL+'/auth/tipoespfis').pipe(tap(data => this.opts = data))
+      this.http.get<any>(this.URL+'/auth/tipoespfis')
+        .pipe(
+          tap(data => {
+            this.opts = data
+          }),
+        )
   }
 
   signUp(user:any){
@@ -57,11 +62,10 @@ export class AuthService {
   getTiposEspFis(){
     return this.http.get<string[]>(this.URL+'/auth/tipoespfis');
   }
+  getTEFCode(){
+    return this.http.get<string[]>(this.URL+'/auth/tipoEspFisCode');
+  }
   getEspacios(){
     return this.http.get(this.URL+'/auth/espacios');
-  }
-
-  getTipEsp(a:any){
-    return this.http.post<any>(this.URL+'/auth/findtipe',a);
   }
 }

@@ -1,10 +1,13 @@
 import {Schema,model} from 'mongoose'
-export const ESPACIOS=["AUDITORIO","SALA","AULA"]
 
-const tipoEspacioSchema=new Schema({
-    name:String
-},{
+const tipoEspacioSchema=new Schema(
+    {
+        name:String,
+        code:Number
+    },
+    {
     versionKey:false
-})
+    }
+)
 
 export default model('TipoFis',tipoEspacioSchema)
