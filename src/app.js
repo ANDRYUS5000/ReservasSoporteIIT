@@ -41,6 +41,7 @@ app.use(function (req, res, next) {
 app.use(morgan('dev'));
 app.use(express.json());//esto es para que interprete los archivos json
 
+//permite leer las variables cargadas en el package.json
 app.get('/',(req,res)=>{
     res.json({
         name:app.get('pkg').name,
@@ -49,7 +50,7 @@ app.get('/',(req,res)=>{
         version:app.get('pkg').version
     })
 })
-
+//especificación de las rutas para el usuario, las reservas y la autenticación
 app.use('/api/users',userRoutes)
 app.use('/api/reservas',reservasRoutes)
 app.use('/api/auth',authRoutes)

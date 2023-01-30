@@ -10,6 +10,7 @@ export class UserService {
     this.user=localStorage.getItem('id')
   }
 
+  //método para obtener el id del usuario que ha ingresado al sistema
   getuser(){
     this.user=localStorage.getItem('id')
     return this.user

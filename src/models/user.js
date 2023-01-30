@@ -1,5 +1,6 @@
 import {Schema,model} from 'mongoose'
 import bcrypt from 'bcrypt'
+//se crea el modelo del usuario, aquí se definen los atributos del mismo
 
 const userSchema=new Schema({
     name:{type:String},
@@ -33,5 +34,6 @@ userSchema.statics.comparePassword=async(password,receivedPassword)=>{
     return await bcrypt.compare(password,receivedPassword)
 }
 
+//exportamos el modelo para usarlo en los controladores
 
 export default model('User',userSchema)

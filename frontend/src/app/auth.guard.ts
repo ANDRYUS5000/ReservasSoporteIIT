@@ -10,12 +10,13 @@ export class AuthGuard implements CanActivate {
     private router:Router){
 
   }
-  
-  canActivate():boolean{
+  //Método para validar si el usuario ha iniciado sesión para acceder a las rutas de su respectivo rol
+    canActivate():boolean{
     if (this.authService.loggedIn()){
       return true;
     }
-    this.router.navigate(['/signin'])
+    //si no ha iniciado sesión, se lo redirige a la pestaña de ingreso
+        this.router.navigate(['/signin'])
     return false;
   }
  

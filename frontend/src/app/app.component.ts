@@ -10,6 +10,8 @@ import { IntermediumService } from './services/intermedium.service';
 export class AppComponent {
   title = 'frontend';
   esAdmin=false;
+   //se realiza el llamado a los servicios para implementarlos en los otros componentes
+ 
   constructor(public authService:AuthService,public intmService:IntermediumService){
   }
 }

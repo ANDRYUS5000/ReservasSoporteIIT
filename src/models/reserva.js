@@ -1,4 +1,13 @@
 const {Schema,model} = require( 'mongoose')
+//se crea el modelo de reserva que contiene los atributos
+//fini:hace alución a la fecha de solicitud
+//fend:hace aluación a la fecha en la que se llevará a cabo
+//namevent: es el nombre del evento
+//user: es el usuario que solicita la reserva
+//sitio: espacio físico en donde se llevará a cabo la reserva
+//state: estado de la reserva, automáticamente será solicitado pero puede cambiar
+//anexo: archivo que será adjuntado de forma opcional por el usuario para que se acepte o rechace la reserva
+//se activa la opción timestamps porque se requiere ordenar las reservas en orden de fecha para listarse 
 
 const reservaSchema=Schema({
     fini:{
@@ -34,5 +43,5 @@ const reservaSchema=Schema({
     timestamps:true,
     versionKey:false
 })
-
+//se exporta el modelo para usarlo en los controladores
 module.exports=model('Reserva', reservaSchema)

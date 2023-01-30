@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { ReservasuserComponent } from './components/reservasuser/reservasuser.component';
-import { ReservasadminComponent } from './components/reservasadmin/reservasadmin.component';
 
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -39,7 +38,6 @@ import {MatButtonModule} from '@angular/material/button'
     SignupComponent,
     SigninComponent,
     ReservasuserComponent,
-    ReservasadminComponent,
     HomeComponent,
     ReportesComponent,
     GestionarespaciosComponent,

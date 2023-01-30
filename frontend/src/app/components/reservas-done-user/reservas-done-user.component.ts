@@ -14,8 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ReservasDoneUserComponent implements OnInit {
 
   
-
-  mensaje = ''
+  //variable para declarar el modelo de dependencia
   dependencia = {
     _id: '',
     id_unidad: '',
@@ -23,7 +22,9 @@ export class ReservasDoneUserComponent implements OnInit {
     id_tipo_unidad: '',
     tipo_unidad: ''
   }
+  //Arreglo de dependencias
   dependencias = [this.dependencia]
+  //Arreglo para declarar el modelo de cada reserva
   reservas = [{
     _id: '',
     fini: '',
@@ -45,6 +46,7 @@ export class ReservasDoneUserComponent implements OnInit {
     anexo: '',
     createdAt: new Date
   }]
+  //Arreglo auxiliar de reservas
   reservaux = [{
     _id: '',
     fini: '',
@@ -66,12 +68,10 @@ export class ReservasDoneUserComponent implements OnInit {
     anexo: '',
     createdAt: new Date
   }]
-  dataApro: any = []
-  dataNap: any = []
-  dataNmd: any = []
-  dataCancel: any = []
+  //variable para obtener el id del usuario loggueado
   idUser: any = ''
 
+  //Método para instanciar los servicios
   constructor(private reseserver: ReservasAdminService,
     private userService: UserService,
     private router:Router,
@@ -81,9 +81,12 @@ export class ReservasDoneUserComponent implements OnInit {
   }
 
 
+//Método que se ejecuta al inicializar la página
   ngOnInit(): void {
+    //solo se muestra el contenido si el rol es USER
     if(this.intmService.esUser())
     {
+      //se obtienen las reservas del usuario enviando el id
       this.reseserver.GetReservasUser(this.idUser)
       .subscribe(
         res => {
@@ -100,6 +103,7 @@ export class ReservasDoneUserComponent implements OnInit {
         }
       )
     }
+    //en caso contrario se muestra mensaje de error y se cierra sesión
     else{
       Swal.fire("No tiene autorización","","error")
           this.authService.logOut()
@@ -107,6 +111,7 @@ export class ReservasDoneUserComponent implements OnInit {
     }
   }
 
+  //Método para filtrar las reservas por estado y mostrarlas en la página
   onState($e:any)
   {
     if($e!=''){
@@ -117,6 +122,8 @@ export class ReservasDoneUserComponent implements OnInit {
     }
   }
  
+  //Método para validar si las reservas indicadas al usuario tienen estado
+  //diferente a cancelado
   noCancelado():boolean
   {
     if(this.reservaux.length!=0)
@@ -128,16 +135,22 @@ export class ReservasDoneUserComponent implements OnInit {
     return false
   } 
   
+  //Método para eliminar reservas, solo aplica para solicitadas
+  //y para no aprobadas
   removeReserva(id: string) {
     this.reseserver.removeReserva(id).subscribe(
       res => {
         console.log(res)
       }
     );
+    //Se recargan las reservas
     location.reload()
   }
 
+  //Método para realizar la cancelación de una reserva aprobada
   cancelReserva(id: string) {
+    //Primero se lanza una ventana para que el usuario
+    //Confirme si desea o no cancelar la reserva
     Swal
       .fire({
         text: "¿Desea cancelar la reserva?",
@@ -146,12 +159,15 @@ export class ReservasDoneUserComponent implements OnInit {
         confirmButtonText: "Sí",
         cancelButtonText: "No",
       })
-      .then(resultado => {
+      .then(resultado =>//si confirma la cancelación
+         {
         if (resultado.value) {
+          //se actualiza el estado de la reserva a cancelado
           this.reseserver.UpdateStateCancel(id)
             .subscribe(
               res => {
-                Swal.fire("Reserva Cancelada")
+                //Se muestra una nueva alerta con el resultado de la operación
+                Swal.fire("Cancelación","Reserva Cancelada","error")
                 this.reservas = res
                 this.reservas.sort((a, b) => {
                   return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())

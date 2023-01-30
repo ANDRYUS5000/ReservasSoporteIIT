@@ -28,9 +28,13 @@ app.use(function (req, res, next) {
     next();
 });
 
+//puerto para ejecutar el backend
 app.set('port', 3000);
 
+//creación del servidor
 var server = http.createServer(app);
 
+//servidor escuchando en el puerto 3000
 server.listen(app.get('port'))
+
 console.log("aplicación funcionando en el puerto",3000)
