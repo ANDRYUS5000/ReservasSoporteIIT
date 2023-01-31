@@ -30,9 +30,34 @@ start: any;
 end: any;
 convert: any;
 convert2: any;
+startAux: any;
+endAux: any;
+buttonDis = false;
+bandera = false;
 
 onHora(e: any){
-  this.start = this.today+" "+e.target.value
+  this.startAux = e.target.value
+  this.buttonDis = false
+  
+  if(this.opcionSeleccionado === "Auditorio"){
+    if(this.bandera){
+      if(parseInt(this.endAux)>=parseInt(this.startAux) && (parseInt(this.endAux)-parseInt(this.startAux)<2)){
+        Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
+        this.buttonDis = false;
+      }else{this.start = this.today+" "+e.target.value;
+          this.buttonDis = true;
+          this.bandera = false}
+    }
+  }
+  if(this.bandera){
+    if(parseInt(this.endAux)>=parseInt(this.startAux)){
+      Swal.fire("Hora Inicial Incorrecta","", "warning")
+      this.buttonDis = false;
+      
+    }else{this.start = this.today+" "+e.target.value;
+        this.buttonDis = true;
+        this.bandera = false}
+  }
 }
 
 onHora1(e: any){
@@ -49,7 +74,8 @@ name = document.getElementById("nombre")
     initialView: 'dayGridMonth', // bind is important!
     plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
     dateClick: this.handleDateClick.bind(this),
-    hiddenDays: [0]
+    hiddenDays: [0],
+    selectable:true
   };
 
   handleDateClick(arg: any) {

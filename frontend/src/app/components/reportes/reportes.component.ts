@@ -4,6 +4,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ReservasAdminService } from 'src/app/services/reservas-admin.service';
 import Swal from 'sweetalert2';
 import { IntermediumService } from 'src/app/services/intermedium.service';
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+import { TitleStrategy } from '@angular/router';
+import * as e from 'cors';
 
 @Component({
   selector: 'app-reportes',
@@ -82,9 +89,25 @@ export class ReportesComponent implements OnInit {
         })
         //se almacenan en la variable auxiliar
         this.reservaux=[...this.reservas]
-       
-      }
+
+        //Se obtinen los eventos y se muestran en el calendario
+        this.eventos = this.reservas.map(function (task) {
+          return{
+            title: task.sitio.name,
+            start: task.fini,
+            end: task.fend,
+            color:'#2E88E9',
+            type: task.sitio.tipo,
+            state:task.state,
+          }
+        }).filter(e=>{
+          return e.state==='aprobado'
+        })
+        const pintarEventos:EventInput[]=[...this.eventos]
+        this.calendarOptions.events=pintarEventos
+        }
     )
+
     //se obtienen las dependencias
     this.authService.getDependencias().subscribe(
       res => {
@@ -168,5 +191,42 @@ export class ReportesComponent implements OnInit {
     }
   }
   
-}
 
+
+  //--------------------------------------------------CALENDARIO-----------------------------------------------//
+
+  eventos=[{ title: '', start: '', end: '', color: '' ,}];
+  
+  calendarOptions: CalendarOptions = {
+    allDaySlot:false,
+    initialView: 'timeGridDay', // bind is important!
+    plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
+    hiddenDays: [0],
+    events:this.eventos,
+
+    slotLabelFormat: {
+      
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      meridiem: 'short'
+    },
+    slotMinTime: '7:00:00',
+    slotMaxTime: '20:00:00',
+    height:'auto',
+    headerToolbar: {
+      left: 'title',
+      center: 'timeGridWeek,timeGridDay,today',
+      right: 'prev,next',
+    }
+  }
+  mostrarCal = false
+
+  mostrar(){
+    if(this.mostrarCal){
+      this.mostrarCal = false
+    }else{
+      this.mostrarCal = true
+    }
+  }
+}
