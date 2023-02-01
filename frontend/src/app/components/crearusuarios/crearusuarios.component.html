@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container pt-5 w-75">
     <div class="row">
-        <div class="col-md-4 mx-auto">
+        <div class="col-md-8 mx-auto">
             <div class="card">
                 <div class="card-header">
                     Registro
@@ -19,12 +19,14 @@
                         <div class="form-group">
                             <label class="col-sm-12">Dependencias</label>
                             <div class="col-sm-12">
-                                <select class="form-control" [(ngModel)]="user.dependencia" ng-disabled="perfil_isEdit"
-                                name="dependencia" id="dependencia" required (change)="onFacultad($event)">
-                                    <option value="" selected>--- Seleccione ---</option>
-                                    <option *ngFor="let dependencia of dependencias"  ngDefaultControl
-                                    value="{{dependencia.id_unidad}}">{{dependencia.nombre_unidad}}</option>
-                                </select>
+                                <input list="menac" name="menac" class="form-control" placeholder="Filtrar por codigo"
+                                    (change)="onFacultad($event)"
+                                >
+                                <datalist id="menac">
+                                    <option *ngFor="let d of dependencias" value="{{d.id_unidad}}">
+                                        {{d.nombre_unidad}}
+                                    </option>
+                                </datalist>
                             </div>
                         </div>
                         <ng-container *ngIf="authService.loggedIn() && intmService.esSuperAdmin()">

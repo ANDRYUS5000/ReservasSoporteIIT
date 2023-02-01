@@ -106,13 +106,12 @@ export class CrearusuariosComponent implements OnInit {
 
          },
          //en caso de error se muestra el error por consola
-         err=>console.log(err)
+         err=>Swal.fire("Error","El usuario ya existe","error")
        )
      }
      else(
        //si el correo no es de dominio udenar.edu.co se lanza un mensaje de error
        Swal.fire("Error","Email inválido, debe ingresar un correo con el dominio @udenar.edu.co","error")
-       
      )
      
    }

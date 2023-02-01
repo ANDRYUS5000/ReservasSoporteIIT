@@ -43,7 +43,7 @@ export class IntermediumService {
         //si el rol es Admin se redirige a la pestaña de admin
         else if(localStorage.getItem('roles')==='ADMIN')
         {
-          this.router.navigate(['/admin'])
+          this.router.navigate(['/reportes'])
         }
         //de lo contrario se asume que es Super Admin y se redirige a la pestaña de registrar usuario
         else

@@ -107,6 +107,10 @@ export class ReportesComponent implements OnInit {
         })
         const pintarEventos:EventInput[]=[...this.eventos]
         this.calendarOptions.events=pintarEventos
+
+        this.reservas.forEach(r=>{
+          this.codigos.push(r.code)
+        })
       }
     )
     //se obtienen las dependencias
@@ -143,25 +147,27 @@ export class ReportesComponent implements OnInit {
       })
       //Se lanza un mensaje para que el Admin notifique al usuario
       Swal.fire("Reserva Aprobada","No se olvide de contactar al usuario y notificar la aprobación","success")
-      this.reservaux=this.reservas
+      this.reservaux=[...this.reservas]
+      location.reload()
     })
   }
   //Método para modificar el estado de una reserva a solicitado
   resmods(id:string){
-     //Se envía el id de la reserva a actualizar
+    //Se envía el id de la reserva a actualizar
     this.reseserver.UpdateStateS(id)
     .subscribe(
       res=>{
-      this.reservas=res
-      this.reservas.sort((a,b)=>{
-        return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
+        this.reservas=res
+        this.reservas.sort((a,b)=>{
+          return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
+        })
+        //Se lanza un mensaje para que el Admin notifique al usuario
+        
+        Swal.fire("Reserva Modificada","No se olvide notificar la modificación","success")
+        
+        this.reservaux=this.reservas
+        location.reload()
       })
-      //Se lanza un mensaje para que el Admin notifique al usuario
-      
-      Swal.fire("Reserva Modificada","No se olvide notificar la modificación","success")
-
-      this.reservaux=this.reservas
-    })
   }
   //Método para modificar el estado de una reserva a no aprobado
   resmodr(id:string){
@@ -169,16 +175,17 @@ export class ReportesComponent implements OnInit {
     this.reseserver.UpdateStateR(id)
     .subscribe(
       res=>{
-      this.reservas=res
-      this.reservas.sort((a,b)=>{
-        return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
+        this.reservas=res
+        this.reservas.sort((a,b)=>{
+          return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
+        })
+        Swal.fire("Reserva No Aprobada","No se olvide de contactar al usuario y notificar el rechazo","error")
+        this.reservaux=this.reservas
+        location.reload()
       })
-      Swal.fire("Reserva No Aprobada","No se olvide de contactar al usuario y notificar el rechazo","error")
-      this.reservaux=this.reservas
-    })
-  }
-
-  //Método para descargar el documento anexo de cada reserva
+    }
+    
+    //Método para descargar el documento anexo de cada reserva
   async Down(id:string){
     await (await this.reseserver.Download(id)).subscribe()
   }
@@ -194,9 +201,13 @@ export class ReportesComponent implements OnInit {
   
   onCode($e:any){
     if ($e.target.value!='') {
-      this.reservaux=this.reservas.filter(r=>r.code==$e.target.value)
+      this.reservaux=this.reservas.filter(r=>{
+        let s:string=$e.target.value
+        s=s.toUpperCase()
+        return r.code.includes( s)
+      })
     }else{
-      this.reservaux=this.reservas
+      this.reservaux=[...this.reservas]
     }
   }
 

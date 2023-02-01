@@ -10,10 +10,10 @@
 
     </div>
     <div class="col-sm-5">
-        <input list="manaos" name="manaos" class="form-control" placeholder="Filtrar por codigo"
+        <input list="menac" name="menac" class="form-control" placeholder="Filtrar por codigo"
             (change)="onCode($event)"
         >
-        <datalist id="manaos">
+        <datalist id="menac">
             <option *ngFor="let c of codigos" value="{{c}}">
             </option>
         </datalist>

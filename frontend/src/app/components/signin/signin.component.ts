@@ -32,7 +32,7 @@ export class SigninComponent implements OnInit {
       try {
         setTimeout(()=>{
           this.authservice.logOut()
-        },1080000);
+        },1800000);
         
       } catch (error) {
         console.log(error)

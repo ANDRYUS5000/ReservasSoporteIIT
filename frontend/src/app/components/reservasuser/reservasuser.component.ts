@@ -38,22 +38,20 @@ onHora(e: any){
   this.buttonDis = false
 
   if(this.opcionSeleccionado === "Auditorio"){
-    if (this.startAux && this.endAux) {
+    if (this.endAux) {
       if(parseInt(this.endAux)<=parseInt(this.startAux)){
         Swal.fire("Hora Inicial Incorrecta","", "warning")
-        this.startAux=undefined
-        this.endAux=undefined
         this.buttonDis = false;
       }else if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
         Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
-        this.startAux=undefined
-        this.endAux=undefined
         this.buttonDis = false;
       }
       else{
         this.start = this.today+" "+e.target.value;
         this.buttonDis = true;
       }
+    }else{
+      this.start = this.today+" "+e.target.value;
     }
   }else{
     if(parseInt(this.endAux)<=parseInt(this.startAux)){
@@ -71,29 +69,27 @@ onHora1(e: any){
   this.buttonDis = false
   
   if(this.opcionSeleccionado === "Auditorio"){
-    if (this.startAux && this.endAux) {
+    if (this.startAux) {
       if(parseInt(this.endAux)<=parseInt(this.startAux)){
         Swal.fire("Hora Inicial Incorrecta","", "warning")
-        this.startAux=undefined
-        this.endAux=undefined
         this.buttonDis = false;
       }else if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
         Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
-        this.startAux=undefined
-        this.endAux=undefined
         this.buttonDis = false;
       }
       else{
-        this.start = this.today+" "+e.target.value;
+        this.end = this.today+" "+e.target.value;
         this.buttonDis = true;
       }
+    }else{
+      this.end = this.today+" "+e.target.value;
     }
   }else{
     if(parseInt(this.endAux)<=parseInt(this.startAux)){
       Swal.fire("Hora Inicial Incorrecta","", "warning")
       this.buttonDis = false;
     }else{
-      this.start = this.today+" "+e.target.value;
+      this.end = this.today+" "+e.target.value;
       this.buttonDis = true;
     }
   }
@@ -109,7 +105,8 @@ name = document.getElementById("nombre")
     initialView: 'dayGridMonth', // bind is important!
     plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
     dateClick: this.handleDateClick.bind(this),
-    hiddenDays: [0]
+    hiddenDays: [0],
+    selectable:true
   };
 
   handleDateClick(arg: any) {
@@ -204,12 +201,13 @@ name = document.getElementById("nombre")
       this.FileAllowed=true
       //Se lanza un mensaje de éxito para el usuario
       Swal.fire("Registro exitoso","Su archivo ha sido adjuntado","success")
-       
+      this.buttonDis=true
     }
     //Si el archivo no es válido se lanza un mensaje de error para que 
     //Se cambie el archivo subido
     else{
       Swal.fire("Error","Tipo de archivo no permitido","error")
+      this.buttonDis=false
     }    
   }
 
@@ -232,6 +230,7 @@ name = document.getElementById("nombre")
         //si el archivo adjunto es válido
         if(this.FileAllowed)
         {
+          this.buttonDis=true
           //se envía la petición de registro de nueva reserva a la base de datos
           await (await this.reserserv.solReserva(this.reserv)).subscribe(async(res)=>{
             const body=new FormData()
