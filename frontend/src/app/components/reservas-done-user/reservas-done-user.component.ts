@@ -115,10 +115,12 @@ export class ReservasDoneUserComponent implements OnInit {
   onState($e:any)
   {
     if($e!=''){
+      console.log(this.reservaux);
+      console.log($e);
       this.reservaux=this.reservas.filter(reserva=>reserva.state==$e)
     }
     else{
-      this.reservaux=this.reservas
+      this.reservaux=[...this.reservas]
     }
   }
  
@@ -173,7 +175,7 @@ export class ReservasDoneUserComponent implements OnInit {
                   return Date.parse(b.createdAt.valueOf().toString()) - Date.parse(a.createdAt.valueOf().toString())
                 })
 
-                this.reservaux = this.reservas
+                this.reservaux = [...this.reservas]
               })
         }
       });

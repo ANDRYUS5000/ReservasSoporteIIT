@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEvent, HttpHandler } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -52,9 +51,8 @@ export class ReservasAdminService {
     return this.http.get<any>(this.URL+'/resuser/'+id)
   }
   //se define la ruta para eliminar una reserva, solo sirve para reservas solicitadas o no aprobadas
-   removeReserva(id:string)
+  removeReserva(id:string)
   {
     return this.http.delete<any>(this.URL+'/removeres/'+id)
   }
-  
 }

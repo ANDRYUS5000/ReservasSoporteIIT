@@ -9,8 +9,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import { TitleStrategy } from '@angular/router';
-import * as e from 'cors';
 
 @Component({
   selector: 'app-reportes',
@@ -45,6 +43,7 @@ export class ReportesComponent implements OnInit {
                     tipo:''
                   },
             state:'', 
+            code:'',
             anexo:'',
             createdAt:new Date}]
 
@@ -63,10 +62,14 @@ export class ReportesComponent implements OnInit {
               name:'',
               tipo:''
             },
-            state:'', 
+            state:'',
+            code:'',
             anexo:'',
             createdAt:new Date}]
-  
+
+  //Arreglo de codigos
+  codigos:any=[]
+
   //Método constructor para llamar los servicios
   constructor(private reseserver:ReservasAdminService,
               private authService:AuthService,
@@ -89,7 +92,6 @@ export class ReportesComponent implements OnInit {
         })
         //se almacenan en la variable auxiliar
         this.reservaux=[...this.reservas]
-
         //Se obtinen los eventos y se muestran en el calendario
         this.eventos = this.reservas.map(function (task) {
           return{
@@ -105,9 +107,8 @@ export class ReportesComponent implements OnInit {
         })
         const pintarEventos:EventInput[]=[...this.eventos]
         this.calendarOptions.events=pintarEventos
-        }
+      }
     )
-
     //se obtienen las dependencias
     this.authService.getDependencias().subscribe(
       res => {
@@ -191,7 +192,13 @@ export class ReportesComponent implements OnInit {
     }
   }
   
-
+  onCode($e:any){
+    if ($e.target.value!='') {
+      this.reservaux=this.reservas.filter(r=>r.code==$e.target.value)
+    }else{
+      this.reservaux=this.reservas
+    }
+  }
 
   //--------------------------------------------------CALENDARIO-----------------------------------------------//
 

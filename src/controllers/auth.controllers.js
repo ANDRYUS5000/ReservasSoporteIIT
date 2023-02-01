@@ -99,7 +99,6 @@ export const crearEspacio = async (req, res) => {
         const l=(await EspFis.find({tipo_espacio:foundTipo[0]._id})).length
         //se agrega un código identificador que se usa para las reservas
         newEspFis.code=foundTipo[0].code + l + 1
-        console.log(newEspFis.code);
     }
     //si todos los datos son correctos, se envía el objeto a la base de datos y se solicita guardarlo
     const savedEsp=await newEspFis.save();

@@ -17,18 +17,21 @@ export const crearReserva=async(req,res)=> {
                 name:sitio,
                 tipo:ess[0].name
             }
+            const l = await (await Reserva.find({sitio:sitex})).length+1
+            let cx = ess[0].pre + es.code + "-" + l
             //se crea la nueva reserva con los datos enviados por el usuario
-            const r=new Reserva({fini, fend, namevent, user, sitio:sitex, state})
+            const r=new Reserva({fini, fend, namevent, user, sitio:sitex, state,code:cx})
+            console.log(r);
             //se envia el objeto reserva a la base de datos
-            await r.save()
-            .then((reserva)=>{
-                //si se ejecutó la operación exitosamente se envia un estatus 200 y la reserva
-                return res.status(200).json(reserva)
-            })
-            .catch(err=>{
-                //si se presenta error al enviar la solicitud se envia mensaje de error
-                res.json('error')
-            })
+            // await r.save()
+            // .then((reserva)=>{
+            //     //si se ejecutó la operación exitosamente se envia un estatus 200 y la reserva
+            //     return res.status(200).json(reserva)
+            // })
+            // .catch(err=>{
+            //     //si se presenta error al enviar la solicitud se envia mensaje de error
+            //     res.json('error')
+            // })
         })
     })
 }

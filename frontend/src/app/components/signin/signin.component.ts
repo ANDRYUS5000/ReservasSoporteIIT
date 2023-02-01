@@ -13,7 +13,6 @@ export class SigninComponent implements OnInit {
   
   user={email:'',
         password:''}
-  mensaje='';
   bandera=false;
   tipo_user='';
   dependencia='';
@@ -33,9 +32,7 @@ export class SigninComponent implements OnInit {
       try {
         setTimeout(()=>{
           this.authservice.logOut()
-        }
-          
-          , 108000);
+        },1080000);
         
       } catch (error) {
         console.log(error)

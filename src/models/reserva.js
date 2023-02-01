@@ -38,6 +38,10 @@ const reservaSchema=Schema({
     anexo:{
         type: String,
         require:[false]
+    },
+    code:{
+        type:String,
+        require:true
     }
 },{
     timestamps:true,

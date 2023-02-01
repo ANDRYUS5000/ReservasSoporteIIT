@@ -5,7 +5,8 @@ import {Schema,model} from 'mongoose'
 const tipoEspacioSchema=new Schema(
     {
         name:String,
-        code:Number
+        code:Number,
+        pre:String
     },
     {
     versionKey:false

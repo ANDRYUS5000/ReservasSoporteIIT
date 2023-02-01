@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import {Router} from '@angular/router';
 import { IntermediumService } from 'src/app/services/intermedium.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -10,10 +11,8 @@ import { IntermediumService } from 'src/app/services/intermedium.service';
 })
 export class SignupComponent implements OnInit {
 
-  
- mensaje="";
- bandera=false;
- user={
+  bandera=false;
+  user={
     name:'',
     ced:'', 
     dependencia:'',
@@ -33,10 +32,6 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.getDependencias();
   }
-
-//   onFacultad(e: any) {
-//     this.user.dependencia = e.target.value;
-// }
 
 onFacultad($e:any){
   
@@ -63,20 +58,15 @@ onFacultad($e:any){
       this.authService.signUp(this.user)    
       .subscribe(
         res=>{
-          //localStorage.setItem('token',res.token)
-          //localStorage.setItem('roles',res.roles)
-          //localStorage.setItem('dependencia',res.dependencia)
+          Swal.fire("Exito","Su usario se a registrado correctamente","success")
           this.router.navigate(['/signin']);
         },
         err=>console.log(err)
       )
     }
     else(
-      this.bandera=true,
-      this.mensaje="Email inválido, debe ingresar un correo con el dominio @udenar.edu.co"
-      
+      Swal.fire("Error","Email inválido, debe ingresar un correo con el dominio @udenar.edu.co","error")
     )
-    
   }
 
 }

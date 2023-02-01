@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
-import { compareAsc, compareDesc, format, parse, parseISO, startOfToday } from "date-fns";
+import { compareAsc , format, parseISO, startOfToday } from "date-fns";
 import { AuthService } from 'src/app/services/auth.service';
 import { IntermediumService } from 'src/app/services/intermedium.service';
 import { UserService } from 'src/app/services/user.service';
@@ -22,46 +22,81 @@ export class ReservasuserComponent implements OnInit{
 
 // ------------------------------------------------- Date fns ---------------------------------------------------- //
 
-// llegaInicio = document.getElementById("from").value;
-
 
 today = format(startOfToday(), 'yyyy-MM-dd');
 start: any;
 end: any;
-convert: any;
-convert2: any;
 startAux: any;
 endAux: any;
+convert: any;
+convert2: any;
 buttonDis = false;
 bandera = false;
 
 onHora(e: any){
   this.startAux = e.target.value
   this.buttonDis = false
-  
+
   if(this.opcionSeleccionado === "Auditorio"){
-    if(this.bandera){
-      if(parseInt(this.endAux)>=parseInt(this.startAux) && (parseInt(this.endAux)-parseInt(this.startAux)<2)){
-        Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
+    if (this.startAux && this.endAux) {
+      if(parseInt(this.endAux)<=parseInt(this.startAux)){
+        Swal.fire("Hora Inicial Incorrecta","", "warning")
+        this.startAux=undefined
+        this.endAux=undefined
         this.buttonDis = false;
-      }else{this.start = this.today+" "+e.target.value;
-          this.buttonDis = true;
-          this.bandera = false}
+      }else if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
+        Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
+        this.startAux=undefined
+        this.endAux=undefined
+        this.buttonDis = false;
+      }
+      else{
+        this.start = this.today+" "+e.target.value;
+        this.buttonDis = true;
+      }
     }
-  }
-  if(this.bandera){
-    if(parseInt(this.endAux)>=parseInt(this.startAux)){
+  }else{
+    if(parseInt(this.endAux)<=parseInt(this.startAux)){
       Swal.fire("Hora Inicial Incorrecta","", "warning")
       this.buttonDis = false;
-      
-    }else{this.start = this.today+" "+e.target.value;
-        this.buttonDis = true;
-        this.bandera = false}
+    }else{
+      this.start = this.today+" "+e.target.value;
+      this.buttonDis = true;
+    }
   }
 }
 
 onHora1(e: any){
-  this.end = this.today+" "+e.target.value
+  this.endAux = e.target.value
+  this.buttonDis = false
+  
+  if(this.opcionSeleccionado === "Auditorio"){
+    if (this.startAux && this.endAux) {
+      if(parseInt(this.endAux)<=parseInt(this.startAux)){
+        Swal.fire("Hora Inicial Incorrecta","", "warning")
+        this.startAux=undefined
+        this.endAux=undefined
+        this.buttonDis = false;
+      }else if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
+        Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
+        this.startAux=undefined
+        this.endAux=undefined
+        this.buttonDis = false;
+      }
+      else{
+        this.start = this.today+" "+e.target.value;
+        this.buttonDis = true;
+      }
+    }
+  }else{
+    if(parseInt(this.endAux)<=parseInt(this.startAux)){
+      Swal.fire("Hora Inicial Incorrecta","", "warning")
+      this.buttonDis = false;
+    }else{
+      this.start = this.today+" "+e.target.value;
+      this.buttonDis = true;
+    }
+  }
 }
 
 name = document.getElementById("nombre")
@@ -74,8 +109,7 @@ name = document.getElementById("nombre")
     initialView: 'dayGridMonth', // bind is important!
     plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
     dateClick: this.handleDateClick.bind(this),
-    hiddenDays: [0],
-    selectable:true
+    hiddenDays: [0]
   };
 
   handleDateClick(arg: any) {
@@ -113,8 +147,11 @@ name = document.getElementById("nombre")
     //se asigna espacio por defecto
     sitio:'Sala de VideoConferencias 1',
     state:'',
-    anexo:''
+    anexo:'',
+    code:''
   }
+
+  ST=['AM','SV','AD','AI','AV']
 
   //variable para almacenar archivo temporal
   filetmp:any
@@ -190,24 +227,30 @@ name = document.getElementById("nombre")
       this.reserv.user=localStorage.getItem('id')
       //se envía el estado solicitado
       this.reserv.state='solicitado'
-      //si el archivo adjunto es válido
-      if(this.FileAllowed)
-      {
-        //se envía la petición de registro de nueva reserva a la base de datos
-        await (await this.reserserv.solReserva(this.reserv)).subscribe(async(res)=>{
-          if (this.FileSelected) {
+      //si se adjunta archivo
+      if (this.FileSelected) {
+        //si el archivo adjunto es válido
+        if(this.FileAllowed)
+        {
+          //se envía la petición de registro de nueva reserva a la base de datos
+          await (await this.reserserv.solReserva(this.reserv)).subscribe(async(res)=>{
             const body=new FormData()
             body.append('file',this.filetmp.fileraw, this.filetmp.filename);
             body.append('res',res._id);
             (await this.reserserv.saveFile(body)).subscribe()
-          }
-        })
+          })
+          //se lanza un mensaje de éxito
+          Swal.fire("Reserva solicitada exitosamente","Será notificado por el personal de la oficina de Soporte IIT","success")
+        }
+        //De lo contrario se lanza un mensaje de error debido al archivo adjunto
+        else{
+          Swal.fire("Error","No se permite realizar la reserva, verifique el tipo de archivo","error")
+        }
+      }else{
+        //se envía la petición de registro de nueva reserva a la base de datos
+        await (await this.reserserv.solReserva(this.reserv)).subscribe()
         //se lanza un mensaje de éxito
         Swal.fire("Reserva solicitada exitosamente","Será notificado por el personal de la oficina de Soporte IIT","success")
-      }
-      //De lo contrario se lanza un mensaje de error debido al archivo adjunto
-      else{
-        Swal.fire("Error","No se permite realizar la reserva, verifique el tipo de archivo","error")
       }
     }
   }

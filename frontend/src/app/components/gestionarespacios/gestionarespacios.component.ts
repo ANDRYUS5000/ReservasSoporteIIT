@@ -28,19 +28,19 @@ export class GestionarespaciosComponent implements OnInit {
     private router:Router) { }
 
     //Método que se ejecuta al iniciar la página
-  ngOnInit(): void {
-    //Se valida que el usuario sea Super Admin
-    if(this.intmService.esSuperAdmin())
-    {
-      this.getTipos();
-      this.getEspacio();
-    }
-    //en caso de que no lo sea se lanza un mensaje de error y se cierra sesión
-    else{
-      Swal.fire("No tiene autorización","","error")
-        this.authService.logOut()
-        this.router.navigate(['/signin'])
-     }
+    ngOnInit(): void {
+      //Se valida que el usuario sea Super Admin
+      if(this.intmService.esSuperAdmin())
+      {
+        this.getTipos();
+        this.getEspacio();
+      }
+      //en caso de que no lo sea se lanza un mensaje de error y se cierra sesión
+      else{
+        Swal.fire("No tiene autorización","","error")
+          this.authService.logOut()
+          this.router.navigate(['/signin'])
+      }
   }
 
   //Método para obtener los códigos de los tipos de espacios
