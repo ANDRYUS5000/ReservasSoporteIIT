@@ -29,7 +29,8 @@ import { ReservasDoneUserComponent } from './components/reservas-done-user/reser
 import {MatAutocompleteModule} from '@angular/material/autocomplete'
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
-import {MatButtonModule} from '@angular/material/button'
+import {MatButtonModule} from '@angular/material/button';
+import { FooterComponent } from './footer/footer.component'
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {MatButtonModule} from '@angular/material/button'
     CrearusuariosComponent,
     EstsuperadminComponent,
     ReservasDoneUserComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

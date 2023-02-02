@@ -1,75 +1,59 @@
-<nav class="navbar  navbar-dark bg-primary" aria-haspopup="true">
-  <a class="navbar-brand" routerLink="/home" routerLinkActive="active">Inicio</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ">
-      <ng-container *ngIf="authService.loggedIn()">
-        <ng-container  *ngIf="intmService.esUser()">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/reservas" routerLinkActive="active">Solicitar Reserva</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/misreservas" routerLinkActive="active">Mis Reservas</a>
-          </li>
+<div class="content">
+  <nav class="navbar  navbar-dark bg-primary" aria-haspopup="true">
+    <a class="navbar-brand" routerLink="/home" routerLinkActive="active">Inicio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ">
+        <ng-container *ngIf="authService.loggedIn()">
+          <ng-container  *ngIf="intmService.esUser()">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/reservas" routerLinkActive="active">Solicitar Reserva</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/misreservas" routerLinkActive="active">Mis Reservas</a>
+            </li>
+          </ng-container>
+          
+          <ng-container *ngIf="intmService.esSuperAdmin()">
+              <li class="nav-item">
+                  <a class="nav-link" routerLink="/estsadmin" routerLinkActive="active">Estadisticas</a>
+              </li>      
+            </ng-container>
+          <ng-container class="nav-item" *ngIf="intmService.esAdmin() || intmService.esSuperAdmin()" >
+            <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Gestionar Reservas</a>
+          </ng-container>
+        
+          <ng-container *ngIf="intmService.esSuperAdmin()">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/registeruser" routerLinkActive="active">Crear Usuarios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/createspace" routerLinkActive="active">Crear Espacios</a>
+            </li>
+          </ng-container>
         </ng-container>
         
-        <ng-container *ngIf="intmService.esSuperAdmin()">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/estsadmin" routerLinkActive="active">Estadisticas</a>
-            </li>      
-          </ng-container>
-        <ng-container class="nav-item" *ngIf="intmService.esAdmin() || intmService.esSuperAdmin()" >
-          <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Gestionar Reservas</a>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <ng-container *ngIf="!authService.loggedIn(); else loggedIn ">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/signin" routerLinkActive="active">Ingreso</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registro</a>
+        </li>
         </ng-container>
-      
-        <ng-container *ngIf="intmService.esSuperAdmin()">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/registeruser" routerLinkActive="active">Crear Usuarios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/createspace" routerLinkActive="active">Crear Espacios</a>
-          </li>
-        </ng-container>
-      </ng-container>
-      
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <ng-container *ngIf="!authService.loggedIn(); else loggedIn ">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/signin" routerLinkActive="active">Ingreso</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registro</a>
-      </li>
-      </ng-container>
-      <ng-template #loggedIn>
-      <li class="nav-item">
-        <a class="nav-link" style="cursor:pointer" (click)="authService.logOut()">Cerrar sesión</a>
-      </li>
-      </ng-template>
-    </ul>
-  </div>
-</nav>
-<router-outlet>
-</router-outlet>
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-4 px-5 border-top bg-secondary">
-  <div class="col">
-    <a class="d-flex" href="http://www.udenar.edu.co">
-      <img src="../assets/Udenar.png" alt="Udenar">
-    </a>
-  </div>
-  <div class="col ml-4"></div>
-  <div class="col"></div>
-  <div class="col">
-    <p style="color: white; text-align: right;" class="m-auto">
-      Sección de Soporte IIT
-      <br>
-      Bloque Tecnologico tercer piso
-      <br>
-      Torobajo - Calle 18 Carrera 50
-    </p>
-  </div>
-</footer>
+        <ng-template #loggedIn>
+        <li class="nav-item">
+          <a class="nav-link" style="cursor:pointer" (click)="authService.logOut()">Cerrar sesión</a>
+        </li>
+        </ng-template>
+      </ul>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
