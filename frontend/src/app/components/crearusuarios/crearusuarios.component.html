@@ -1,0 +1,67 @@
+<div class="container pt-5 w-75">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    Registro
+                </div>
+                <div class="card-body">
+                    <form (submit)="signUp()">
+                        <div class="form-group">
+                            <label for="ced">Cédula</label>
+                            <input type="text" [(ngModel)]="user.ced" name="ced" id="ced" class="form-control" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" [(ngModel)]="user.name" name="nombre" id="nombre" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-12">Dependencias</label>
+                            <div class="col-sm-12">
+                                <input list="menac" name="menac" class="form-control" placeholder="Filtrar por codigo"
+                                    (change)="onFacultad($event)"
+                                >
+                                <datalist id="menac">
+                                    <option *ngFor="let d of dependencias" value="{{d.id_unidad}}">
+                                        {{d.nombre_unidad}}
+                                    </option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="authService.loggedIn() && intmService.esSuperAdmin()">
+                            <div class="form-group">
+                                <label class="col-sm-12">Rol</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" [(ngModel)]="user.roles" ng-disabled="perfil_isEdit"
+                                    name="roles" id="roles" required (change)="onRole($event)">
+                                        <option value="" selected>--- Seleccione ---</option>
+                                        <option *ngFor="let rol of roles"  ngDefaultControl
+                                        value="{{rol.name}}">{{rol.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </ng-container>                    
+                        <div class="form-group">
+                            <label for="email">Correo</label>
+                            <input type="email" [(ngModel)]="user.email" name="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Contraseña</label>
+                            <input type="password" [(ngModel)]="user.password" name="pass" id="pass" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" [(ngModel)]="user.telefono" name="tel" id="tel" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </form>
+                </div>
+            </div>
+    
+        </div>
+       
+    </div>
+    <br>
+</div>
+

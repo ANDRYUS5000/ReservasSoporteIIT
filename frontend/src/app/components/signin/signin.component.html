@@ -1,0 +1,32 @@
+<div class="row p-5">
+    <div class="col-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Ingreso
+            </div>
+            <div class="card-body">
+                <form class="from-group" (submit)="login()">
+                    <div class="form-group">
+                        <label for="email">Correo</label>
+                        <input type="email" [(ngModel)]="user.email"  name="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Contraseña</label>
+                        <input type="password"  [(ngModel)]="user.password" name="pass" id="pass" class="form-control" required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <button type="submit" class="btn btn-primary  ">Ingresar</button>
+                        </div>   
+                        <div class="form-group col">
+                            <a  routerLink="/signup">No tengo cuenta<br>Registrarme</a>
+                        </div>  
+                    </div>
+                                  
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
