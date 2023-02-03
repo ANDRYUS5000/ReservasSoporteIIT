@@ -10,26 +10,25 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
-  
+  //variable para declarar el modelo del usuario
   user={email:'',
         password:''}
-  bandera=false;
-  tipo_user='';
-  dependencia='';
+  
+  //Método para declarar los servicios
   constructor(
-    // private authService:AuthService,
+
     private intmService:IntermediumService,
     private router:Router,
     private authservice:AuthService) { }
 
   ngOnInit(): void {
   }
-
+  //método para permitir el ingreso a la página
   login(){
+    //Se ejecuta el login enviando al usuario
     this.intmService.login(this.user);
-    
- 
-      try {
+    try {
+      //una vez pasados 30 minutos se cierra sesión
         setTimeout(()=>{
           this.authservice.logOut()
         },1800000);

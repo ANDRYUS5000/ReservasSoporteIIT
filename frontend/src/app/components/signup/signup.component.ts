@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class SignupComponent implements OnInit {
 
-  bandera=false;
+   //Variable para declarar el modelo de usuario a registrar
   user={
     name:'',
     ced:'', 
@@ -20,24 +20,25 @@ export class SignupComponent implements OnInit {
     password:'',
     telefono:''
   }
+  //arreglo de dependencias
   dependencias: any = [];
-  constructor(public authService:AuthService,
-    
+   //Método constructor para instanciar los servicios
+  constructor(public authService:AuthService,    
     private router:Router,
     public intmService:IntermediumService,
     ) { 
 
   }
-
+//Método para cargar las dependencias al cargar la página
   ngOnInit(): void {
     this.getDependencias();
   }
-
+//Método para obtener la dependencia seleccionada por el usuario
 onFacultad($e:any){
   
   this.user.dependencia=$e.target.value
 }
-
+//Método para obtener todas las dependencias almacenadas en la base de datos
   getDependencias() {
     
     this.authService.getDependencias().subscribe(
@@ -51,19 +52,25 @@ onFacultad($e:any){
       err => console.log(err)
     );
   };
-
+  //Método para registrar un usuario
   signUp(){
+    //Se valida que el correo tenga el dominio perteneciente a @udenar.edu.co
     if(this.user.email.indexOf("@udenar.edu.co")!==-1)
     {
+      //se envía el usuario y se ejecuta la función empleando el servicio
       this.authService.signUp(this.user)    
       .subscribe(
         res=>{
-          Swal.fire("Exito","Su usario se a registrado correctamente","success")
+          //Si no hay error en el registro del usuario se lanza este mensaje
+          Swal.fire("Exito","Su usuario se ha registrado correctamente","success")
           this.router.navigate(['/signin']);
         },
-        err=>console.log(err)
+        //en caso de que el correo o la cédula ya estén registrados en la base de datos, no se registra el usuario
+        //y se lanza este mensaje
+        err=>Swal.fire("Error","El correo y/o cédula ya existen, por favor verifique sus datos","error")
       )
     }
+    //si el correo introducido no tiene un dominio válido se lanza este mensaje
     else(
       Swal.fire("Error","Email inválido, debe ingresar un correo con el dominio @udenar.edu.co","error")
     )
