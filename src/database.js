@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 //conexión a la base de datos
-const MONGO_CNN='mongodb+srv://admin:123@cluster0.un5td0x.mongodb.net/reservas'
+const MONGO_CNN='mongodb+srv://admin:123@cluster0.un5td0x.mongodb.net/reservas' // Base de datos de prueba. Se debera cambiar a la Oficial
 
 //conexión a la base de datos
 mongoose.connect(MONGO_CNN,{
