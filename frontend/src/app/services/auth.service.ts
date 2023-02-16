@@ -74,10 +74,10 @@ export class AuthService {
   }
   //ruta para obtener loscódigos de los tipos de espacios físicos 
   getTEFCode(){
-    return this.http.get<string[]>(this.URL+'/auth/tipoEspFisCode');
+    return this.http.get<any>(this.URL+'/auth/tipoEspFisCode');
   }
   //ruta para obtener los espacios físicos
   getEspacios(){
-    return this.http.get(this.URL+'/auth/espacios');
+    return this.http.get<any>(this.URL+'/auth/espacios');
   }
 }

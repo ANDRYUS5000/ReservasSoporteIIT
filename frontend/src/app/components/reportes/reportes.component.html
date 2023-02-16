@@ -33,7 +33,7 @@
             <td><b>Reserva</b></td>
             <td><b>Opciones</b></td>
         </tr>
-        <tr *ngFor="let r of reservaux">
+        <tr *ngFor="let r of reservaux | paginate:{itemsPerPage:10,currentPage:p}">
             <td>Cédula:{{r.user.ced}}<br>
                 Nombre: {{r.user.name}}<br>
                 Email: {{r.user.email}}<br>
@@ -79,6 +79,7 @@
             </ng-template>
         </tr>
     </table>
+    <pagination-controls (pageChange)="p=$event"></pagination-controls>
     <div class="containerCal mt-2 col-4" *ngIf="mostrarCal">
         <full-calendar [options]="calendarOptions"></full-calendar>
     </div>

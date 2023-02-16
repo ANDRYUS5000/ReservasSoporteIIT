@@ -31,7 +31,7 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button';
 import { FooterComponent } from './footer/footer.component'
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -60,6 +60,7 @@ import { FooterComponent } from './footer/footer.component'
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    NgxPaginationModule,
   ],
   providers: [
     AuthGuard,

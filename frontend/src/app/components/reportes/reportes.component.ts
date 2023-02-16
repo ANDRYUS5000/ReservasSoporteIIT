@@ -17,6 +17,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 })
 export class ReportesComponent implements OnInit {
 
+  p:number=1
   //variable para declarar el modelo de la dependencia
   dependencia={
     _id:'',

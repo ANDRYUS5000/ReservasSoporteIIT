@@ -37,7 +37,7 @@ onHora(e: any){
   this.startAux = e.target.value
   this.buttonDis = false
 
-  if(this.opcionSeleccionado === "Auditorio"){
+  if(this.seleccion === "Auditorio"){
     if (this.endAux) {
       if(parseInt(this.endAux)<=parseInt(this.startAux)){
         Swal.fire("Hora Inicial Incorrecta","", "warning")
@@ -68,7 +68,7 @@ onHora1(e: any){
   this.endAux = e.target.value
   this.buttonDis = false
   
-  if(this.opcionSeleccionado === "Auditorio"){
+  if(this.seleccion === "Auditorio"){
     if (this.startAux) {
       if(parseInt(this.endAux)<=parseInt(this.startAux)){
         Swal.fire("Hora Inicial Incorrecta","", "warning")
@@ -118,45 +118,52 @@ name = document.getElementById("nombre")
     
   };
 
-  espacios: any = [
-    {name: "Auditorio", value: 1},{name: "Sala de VideoConferencias 1", value: 2}, {name: "Sala de VideoConferencias 2", value: 3}
-  ];
- 
-
-  opcionSeleccionado: any  = '0';
-  verSeleccion: any        = '';
-
-  capturar() {
-    // Pasamos el valor seleccionado a la variable verSeleccion
-    this.verSeleccion = this.opcionSeleccionado;
-  };
-
-// ------------------------------------------------------------------------------------------------------------- //
-
-//------------------------------------------Envio de Reserva---------------------------------------------------- //
-
-//Variable para declarar el modelo de reserva
+  // ------------------------------------------------------------------------------------------------------------- //
+  
+  //------------------------------------------Envio de Reserva---------------------------------------------------- //
+  
+  //Variable para declarar el modelo de reserva
   reserv={
     fini:'',
     fend:'',   
     namevent:'',
     user:this.ususer.getuser(),
     //se asigna espacio por defecto
-    sitio:'Sala de VideoConferencias 1',
+    sitio: {
+      name:String,
+      code:Number
+    },
     state:'',
     anexo:'',
     code:''
   }
+  
+  espaciosaux:any[]=[]
+  
+  
+  seleccion: any  = '0';
+  
+  espacio={
+    name:String,
+    code:Number
+  }
+  tipoespacio= {
+    name:String,
+    code:Number
+  }
+  
+  espacios = [this.espacio];
+  TEsp = [this.tipoespacio]
 
   ST=['AM','SV','AD','AI','AV']
-
+  
   //variable para almacenar archivo temporal
   filetmp:any
   //variable para verificar si se adjuntó o no un archivo
   FileSelected:boolean=false
   //variable para validar si la extensión del archivo es válida o no
   FileAllowed:boolean=false
-
+    
   //Método para instanciar los servicios
   constructor(public authservice:AuthService,
     public intmserver:IntermediumService,
@@ -164,19 +171,48 @@ name = document.getElementById("nombre")
     public reserserv:ReservasAdminService,
     private router:Router
   ) {}
-
+    
   //Método que se ejecuta al cargar la página
   ngOnInit(): void {
-    //solo se muestra el contenido si es usuario es tipo USER
-    if(this.intmserver.esUser())
-    this.FileSelected=false
+      //solo se muestra el contenido si es usuario es tipo USER
+      if(this.intmserver.esUser()){
+        //Se declaran variables iniciales
+      this.FileSelected=false
+      this.authservice.getTEFCode().subscribe(res=>{
+        this.TEsp=res
+      })
+      this.authservice.getEspacios().subscribe(res=>{
+        this.espacios=res
+        this.espaciosaux=[...this.espacios]
+      })
+    }
     //si no lo es se lanza una alerta de error y se cierra sesión
-  else{
-    Swal.fire("No tiene autorización","","error")
-        this.authservice.logOut()
-        this.router.navigate(['/signin'])
-     }
+    else{
+      Swal.fire("No tiene autorización","","error")
+      this.authservice.logOut()
+      this.router.navigate(['/signin'])
+    }
+    
+  }
   
+  capturar() {
+    // Pasamos el valor seleccionado a la variable verSeleccion
+    const st:String=this.seleccion
+    this.espacio = this.espacios.find(esp=>{
+      return esp.name.toString() === st
+    })!
+  };
+
+  Filtrar($e:any){
+    const st:String=$e.target.value
+    this.tipoespacio = this.TEsp.find(tip=>{
+      return tip.code.toString() === st
+    })!
+    this.espaciosaux=[...this.espacios]
+    const ex=this.espaciosaux.filter(esp=>{
+      return esp.code.toString().startsWith(st.substring(0,1))
+    })
+    this.espaciosaux=ex
   }
 
   //Método para adjuntar anexo
@@ -216,7 +252,7 @@ name = document.getElementById("nombre")
     //Solo se ejecuta si el usuario es tipo USER
     if(this.intmserver.esUser()){
       //se envía el sitio seleccionado
-      this.reserv.sitio= this.opcionSeleccionado
+      this.reserv.sitio= this.espacio
       //se envía la fecha de inicio
       this.reserv.fini=this.start
       //se envía la fecha de finalización

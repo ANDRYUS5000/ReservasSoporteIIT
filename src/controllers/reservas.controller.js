@@ -9,12 +9,12 @@ export const crearReserva=async(req,res)=> {
      //se destructura el body para obtener los parámetros para registrar la reserva
     const {fini, fend, namevent, user, sitio, state} = req.body
     //se busca el espacio físico para obtener su tipo
-    await EspFis.findOne({name:sitio}).then(async es=>{
+    await EspFis.findOne({name:sitio.name}).then(async es=>{
         //una vez se trae el espacio físico se obtiene su tipo 
         await TipoFis.find({_id:es.tipo_espacio}).then(async ess=>{
             //se crea una variable para guardar el lugar y el nombre del tipo de espacio
             let sitex={
-                name:sitio,
+                name:sitio.name,
                 tipo:ess[0].name
             }
             const l = await (await Reserva.find({sitio:sitex})).length+1

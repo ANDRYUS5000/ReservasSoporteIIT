@@ -21,14 +21,25 @@
                     <input class="ml-2 mb-3" type="text" name="nombre" id="nombre" [(ngModel)]="reserv.namevent">
                 </div>
     
+                <label for="" class="mt-4">Tipo de espacio</label>
+                <select class="ml-2 mb-4" (change)="Filtrar($event)">
+                    <option value="0" selected disabled>Selecciona un Tipo de Espacio</option>
+                    <option *ngFor="let esp of TEsp" value="{{esp.code}}">
+                        {{esp.name}}
+                    </option>
+                </select>
+
+                <br>
+
                 <label for="" class="mt-4">Espacio Fisico</label>
-                <select class="ml-2 mb-4" [(ngModel)]="opcionSeleccionado" (change)="capturar()" [ngModelOptions]="{standalone: true}">
+                <select class="ml-2 mb-4" [(ngModel)]="seleccion" (change)="capturar()" [ngModelOptions]="{standalone: true}">
                     <option value="0" selected disabled>Selecciona un Espacio</option>
-                    <option *ngFor="let espacio of espacios" value="{{espacio.name}}" >
+                    <option *ngFor="let espacio of espaciosaux" value="{{espacio.name}}" >
                         {{espacio.name}}
                     </option>
                 </select>
-                <div ngSwitch="{{opcionSeleccionado}}">
+
+                <div ngSwitch="{{seleccion}}">
     
                     <div *ngSwitchCase="'Auditorio'">
                         <div class="d-inline" >
