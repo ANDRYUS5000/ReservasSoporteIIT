@@ -22,7 +22,7 @@ export class ReservasuserComponent implements OnInit{
 
 // ------------------------------------------------- Date fns ---------------------------------------------------- //
 
-
+actualhour = format(new Date, 'H')
 today = format(startOfToday(), 'yyyy-MM-dd');
 start: any;
 end: any;
@@ -33,34 +33,31 @@ convert2: any;
 buttonDis = false;
 bandera = false;
 
+
 onHora(e: any){
   this.startAux = e.target.value
   this.buttonDis = false
 
-  if(this.seleccion === "Auditorio"){
-    if (this.endAux) {
-      if(parseInt(this.endAux)<=parseInt(this.startAux)){
-        Swal.fire("Hora Inicial Incorrecta","", "warning")
-        this.buttonDis = false;
-      }else if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
-        Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
-        this.buttonDis = false;
-      }
-      else{
-        this.start = this.today+" "+e.target.value;
-        this.buttonDis = true;
-      }
-    }else{
-      this.start = this.today+" "+e.target.value;
-    }
-  }else{
+  if (this.endAux) {
     if(parseInt(this.endAux)<=parseInt(this.startAux)){
       Swal.fire("Hora Inicial Incorrecta","", "warning")
       this.buttonDis = false;
     }else{
-      this.start = this.today+" "+e.target.value;
-      this.buttonDis = true;
+      if(this.seleccion === "Auditorio"){
+        if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
+          Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
+          this.buttonDis = false;
+        }else{
+          this.start = this.today+" "+e.target.value;
+          this.buttonDis = true;
+        }
+      }else{
+        this.start = this.today+" "+e.target.value;
+        this.buttonDis = true;
+      }
     }
+  }else{
+    this.start = this.today+" "+e.target.value;
   }
 }
 
@@ -68,34 +65,28 @@ onHora1(e: any){
   this.endAux = e.target.value
   this.buttonDis = false
   
-  if(this.seleccion === "Auditorio"){
-    if (this.startAux) {
-      if(parseInt(this.endAux)<=parseInt(this.startAux)){
-        Swal.fire("Hora Inicial Incorrecta","", "warning")
-        this.buttonDis = false;
-      }else if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
-        Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
-        this.buttonDis = false;
-      }
-      else{
-        this.end = this.today+" "+e.target.value;
-        this.buttonDis = true;
-      }
-    }else{
-      this.end = this.today+" "+e.target.value;
-    }
-  }else{
+  if (this.startAux) {
     if(parseInt(this.endAux)<=parseInt(this.startAux)){
       Swal.fire("Hora Inicial Incorrecta","", "warning")
       this.buttonDis = false;
     }else{
-      this.end = this.today+" "+e.target.value;
-      this.buttonDis = true;
+      if(this.seleccion === "Auditorio"){
+        if((parseInt(this.endAux)-parseInt(this.startAux)<2)){
+          Swal.fire("","El auditorio debe reservarse por lo menos 2 horas", "warning")
+          this.buttonDis = false;
+        }else{
+          this.end = this.today+" "+e.target.value;
+          this.buttonDis = true;
+        }
+      }else{
+        this.end = this.today+" "+e.target.value;
+        this.buttonDis = true;
+      }
     }
+  }else{
+    this.end = this.today+" "+e.target.value;
   }
 }
-
-name = document.getElementById("nombre")
 
 // -------------------------------------------------------------------------------------------------------- //
 
@@ -151,6 +142,8 @@ name = document.getElementById("nombre")
     name:String,
     code:Number
   }
+
+  index=-1
   
   espacios = [this.espacio];
   TEsp = [this.tipoespacio]
@@ -174,6 +167,13 @@ name = document.getElementById("nombre")
     
   //Método que se ejecuta al cargar la página
   ngOnInit(): void {
+
+    var auxActualHour = parseInt(this.actualhour)
+    if(auxActualHour < 6 || auxActualHour > 17){
+      Swal.fire("Hora Invalida","Las reservas se pueden realizar de 7am a 6pm", "warning")
+      this.buttonDis = false
+    }
+    
       //solo se muestra el contenido si es usuario es tipo USER
       if(this.intmserver.esUser()){
         //Se declaran variables iniciales
@@ -197,13 +197,18 @@ name = document.getElementById("nombre")
   
   capturar() {
     // Pasamos el valor seleccionado a la variable verSeleccion
+    this.startAux=undefined
+    this.endAux=undefined
     const st:String=this.seleccion
     this.espacio = this.espacios.find(esp=>{
       return esp.name.toString() === st
     })!
+    this.index=this.espaciosaux.indexOf(this.espacio)
   };
 
   Filtrar($e:any){
+    this.startAux=undefined
+    this.endAux=undefined
     const st:String=$e.target.value
     this.tipoespacio = this.TEsp.find(tip=>{
       return tip.code.toString() === st
@@ -213,6 +218,7 @@ name = document.getElementById("nombre")
       return esp.code.toString().startsWith(st.substring(0,1))
     })
     this.espaciosaux=ex
+    this.seleccion="0"
   }
 
   //Método para adjuntar anexo
